@@ -681,22 +681,37 @@ ol {
 }
 
 .hero-content .social-links svg {
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
 }
 
-/* Social Link with Label - Hero Section */
-.social-link-with-label {
+/* Social Link Icon Only - Hero Section */
+.social-link-icon-only {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: var(--radius-lg);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  color: var(--text-secondary);
+  transition: all var(--transition-base);
 }
 
-.social-label {
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-  font-weight: 500;
+.social-link-icon-only:hover {
+  background: var(--glass-bg-light);
+  border-color: var(--glass-border-accent);
+  color: var(--accent-cyan);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-glow-cyan);
+}
+
+.social-icon-large {
+  width: 28px;
+  height: 28px;
 }
 
 /* Responsive Hero - Mobile First Breakpoints */
@@ -792,25 +807,6 @@ ol {
   margin: 0 auto;
 }
 
-.photo-placeholder {
-  width: 200px;
-  height: 200px;
-  border-radius: var(--radius-full);
-  background: linear-gradient(135deg, var(--bg-tertiary), var(--bg-secondary));
-  border: 2px solid var(--glass-border-accent);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  box-shadow: var(--shadow-glow-cyan);
-}
-
-.placeholder-text {
-  color: var(--text-muted);
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-medium);
-}
-
 .bio-content {
   display: flex;
   flex-direction: column;
@@ -824,37 +820,42 @@ ol {
   color: var(--text-secondary);
 }
 
-/* Responsive layout - photo left, bio right on desktop */
+.about-container.bio-only {
+  display: block;
+  text-align: center;
+  background: none;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.about-container.bio-only .bio-content.full-width {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.about-container.bio-only .bio-content p {
+  font-size: 1.125rem;
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+  color: var(--text-secondary);
+}
+
+.about-container.bio-only .bio-content p:last-child {
+  margin-bottom: 0;
+}
+
 @media (min-width: 768px) {
-  .about-container {
-    flex-direction: row;
-    align-items: flex-start;
-    gap: var(--space-3xl);
-    padding: var(--space-3xl);
-  }
-
-  .bio-content {
+  .about-container.bio-only .bio-content.full-width {
     text-align: left;
-  }
-
-  .photo-placeholder {
-    width: 250px;
-    height: 250px;
   }
 }
 
 @media (min-width: 1024px) {
-  .about-container {
-    gap: var(--space-4xl);
-    padding: var(--space-4xl);
-  }
-
-  .photo-placeholder {
-    width: 280px;
-    height: 280px;
-  }
-
-  .bio-content p {
+  .about-container.bio-only .bio-content p {
     font-size: var(--font-size-xl);
   }
 }
@@ -1011,6 +1012,9 @@ ol {
 }
 
 .email-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
   font-size: var(--font-size-2xl);
   font-weight: var(--font-semibold);
   color: var(--accent-cyan);
@@ -1022,11 +1026,17 @@ ol {
   background: rgba(6, 182, 212, 0.1);
 }
 
+.email-link i {
+  font-size: 1.25rem;
+}
+
 .email-link:hover {
   background: rgba(6, 182, 212, 0.2);
   border-color: var(--accent-cyan);
   box-shadow: var(--shadow-glow-cyan);
   transform: translateY(-2px);
+  color: var(--text-primary);
+  text-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
 }
 
 .social-links {
@@ -1065,6 +1075,110 @@ ol {
 .social-text {
   font-size: var(--font-size-base);
   font-weight: var(--font-medium);
+}
+
+/* Social Icons Container */
+.social-icons-container {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.social-icon-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--text-secondary);
+    font-size: 32px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.social-icon-link:hover {
+    color: var(--accent-cyan);
+    transform: scale(1.2);
+    box-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
+    border-color: var(--accent-cyan);
+}
+
+.footer-icons {
+    margin-top: 1.5rem;
+}
+
+.footer-icons .social-icon-link {
+    width: 48px;
+    height: 48px;
+    font-size: 24px;
+}
+
+/* Contact section icons styling */
+.contact-icons {
+    margin-top: 2rem;
+    gap: 1.5rem;
+}
+
+.contact-icons .social-icon-link {
+    width: 56px;
+    height: 56px;
+    font-size: 28px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    transition: all 0.3s ease;
+}
+
+.contact-icons .social-icon-link:hover {
+    color: var(--accent-cyan);
+    transform: translateY(-3px);
+    box-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
+    border-color: var(--accent-cyan);
+}
+
+/* LeetCode text icon styling */
+.leetcode-text-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.leetcode-text {
+    font-weight: 800;
+    font-size: 16px;
+    letter-spacing: -1px;
+    font-family: 'Poppins', sans-serif;
+    line-height: 1;
+}
+
+/* LeetCode official brand color on hover */
+.social-icon-link[aria-label="LeetCode"]:hover {
+    color: #FFA116; /* LeetCode official yellow/gold */
+    border-color: #FFA116;
+    box-shadow: 0 0 20px rgba(255, 161, 22, 0.5);
+}
+
+/* Contact text and email styling */
+.contact-text {
+    font-size: var(--font-size-xl);
+    color: var(--text-secondary);
+    text-align: center;
+    margin-bottom: var(--space-lg);
+}
+
+.contact-card .email {
+    font-size: var(--font-size-lg);
+    color: var(--accent-cyan);
+    text-align: center;
+    margin-top: var(--space-lg);
 }
 
 /* Responsive adjustments */
@@ -1631,19 +1745,6 @@ footer .social-links a:focus-visible {
     flex-direction: row !important;
     align-items: flex-start !important;
     gap: 15pt !important;
-  }
-  
-  .photo-placeholder {
-    width: 80pt !important;
-    height: 80pt !important;
-    border: 1pt solid #ccc !important;
-    background: #f5f5f5 !important;
-    box-shadow: none !important;
-  }
-  
-  .placeholder-text {
-    color: #666 !important;
-    font-size: 10pt !important;
   }
   
   .bio-content {
