@@ -1,0 +1,70 @@
+=== Task 7 Verification Report ===
+
+1. HTML Structure Check:
+128:                <h2 data-animate="fade-up">Education & Experience</h2>
+129:                <div class="timeline-container" data-animate="fade-up">
+130:                    <div class="timeline-line" aria-hidden="true"></div>
+132:                    <article class="timeline-entry left" data-animate="fade-up">
+135:                            <h3>B.Tech Computer Science</h3>
+6:    <meta name="description" content="Portfolio of Pratyush Deo Singh, Computer Science Student at VIT Chennai">
+69:                        <p>I'm a first-year Computer Science student at VIT Chennai with a strong interest in building and understanding how things work at a deeper level.</p>
+136:                            <h4>VIT Chennai</h4>
+137:                            <span class="period">2025 - Present</span>
+37:            <div class="container hero-content" data-animate="fade-up">
+64:                <div class="about-container glass" data-animate="fade-up">
+79:            <div class="container" data-animate="fade-up">
+82:                    <article class="skill-card" data-animate="fade-up" data-stagger="1">
+89:                    <article class="skill-card" data-animate="fade-up" data-stagger="2">
+
+2. CSS Styles Check:
+787:.timeline-container {
+911:  .timeline-container {
+795:.timeline-line {
+915:  .timeline-line {
+812:.timeline-entry {
+819:.timeline-entry.left {
+825:.timeline-entry.right {
+863:.timeline-entry.left .timeline-dot {
+867:.timeline-entry.right .timeline-dot {
+920:  .timeline-entry {
+929:  .timeline-entry.left .timeline-dot,
+930:  .timeline-entry.right .timeline-dot {
+832:.timeline-card {
+843:.timeline-card:hover {
+872:.timeline-card h3 {
+883:.timeline-card h4 {
+890:.timeline-card .period {
+901:.timeline-card .description {
+935:  .timeline-card {
+939:  .timeline-card h3 {
+943:  .timeline-card h4 {
+910:@media (max-width: 768px) {
+3. Glassmorphism Check:
+133:                        <div class="timeline-card glass">
+
+4. Description Content Check:
+                            <span class="period">2025 - Present</span>
+                            <p class="description">Currently pursuing Bachelor of Technology in Computer Science and Engineering. Focusing on Data Structures, Algorithms, and core computer science fundamentals.</p>
+
+5. Responsive Styles Check:
+@media (max-width: 768px) {
+  .timeline-container {
+    padding: var(--space-lg) 0;
+  }
+  
+  .timeline-line {
+    left: 20px;
+    transform: none;
+  }
+  
+  .timeline-entry {
+    width: 100%;
+    left: 0 !important;
+    padding-left: 50px !important;
+    padding-right: var(--space-md) !important;
+    text-align: left !important;
+    margin-bottom: var(--space-lg);
+  }
+  
+  .timeline-entry.left .timeline-dot,
+  .timeline-entry.right .timeline-dot {

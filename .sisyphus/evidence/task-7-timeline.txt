@@ -1,0 +1,39 @@
+Task 7: Experience Timeline Section - QA Evidence
+
+Screenshot could not be generated due to missing browser automation tools (Node.js/Playwright not available in environment).
+
+VERIFICATION COMPLETED via file analysis:
+
+✓ HTML Structure:
+  - Heading: "Education & Experience" with data-animate="fade-up"
+  - timeline-container with data-animate="fade-up"
+  - timeline-line (vertical connector) with aria-hidden="true"
+  - article.timeline-entry.left with data-animate="fade-up"
+  - div.timeline-card.glass (glassmorphism applied)
+  - h3: "B.Tech Computer Science"
+  - h4: "VIT Chennai"
+  - span.period: "2025 - Present"
+  - p.description: Exact text as specified
+
+✓ CSS Styles:
+  - .timeline-container (position: relative, max-width: 1000px)
+  - .timeline-line (absolute positioned vertical gradient line)
+  - .timeline-entry (50% width, left/right positioning)
+  - .timeline-entry.left/.right (alternating sides on desktop)
+  - .timeline-card (glassmorphism: backdrop-filter, border, gradient text)
+  - .timeline-dot (connector dots positioned at timeline line)
+  - Responsive @media (max-width: 768px) styles (single column, left-aligned)
+
+✓ Glassmorphism Applied:
+  - backdrop-filter: blur(16px)
+  - background: rgba(15, 23, 42, 0.6)
+  - border: 1px solid rgba(148, 163, 184, 0.1)
+  - Hover effects with glow shadow
+
+✓ Responsive Design:
+  - Desktop: Alternating left/right layout with centered timeline line
+  - Mobile (< 768px): Single column, left-aligned with timeline line at 20px
+
+All requirements met. Files modified:
+- /home/prat/projects/portfolio/index.html (Experience section)
+- /home/prat/projects/portfolio/styles.css (Timeline styles)
