@@ -11,17 +11,16 @@
     <!-- Canonical URL -->
     <link rel="canonical" href="https://pratyushdeosingh.netlify.app">
     
-    <!-- Favicon - Add your favicon files here -->
-    <!-- <link rel="icon" type="image/x-icon" href="/favicon.ico"> -->
-    <!-- <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"> -->
-    <!-- <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"> -->
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👨‍💻</text></svg>">
+    <link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👨‍💻</text></svg>">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://pratyushdeosingh.netlify.app">
     <meta property="og:title" content="Pratyush Deo Singh | Computer Science Student">
     <meta property="og:description" content="Portfolio of Pratyush Deo Singh, Computer Science Student at VIT Chennai. Passionate about building innovative solutions through code.">
-    <meta property="og:image" content="https://pratyushdeosingh.netlify.app/og-image.jpg">
+    <meta property="og:image" content="https://pratyushdeosingh.netlify.app/og-image.svg">
     <meta property="og:site_name" content="Pratyush Deo Singh Portfolio">
     <meta property="og:locale" content="en_US">
     
@@ -30,7 +29,7 @@
     <meta property="twitter:url" content="https://pratyushdeosingh.netlify.app">
     <meta property="twitter:title" content="Pratyush Deo Singh | Computer Science Student">
     <meta property="twitter:description" content="Portfolio of Pratyush Deo Singh, Computer Science Student at VIT Chennai. Passionate about building innovative solutions through code.">
-    <meta property="twitter:image" content="https://pratyushdeosingh.netlify.app/og-image.jpg">
+    <meta property="twitter:image" content="https://pratyushdeosingh.netlify.app/og-image.svg">
     
     <title>Pratyush Deo Singh | Computer Science Student</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -50,6 +49,7 @@
                 <li role="none"><a href="#hero" class="nav-link" role="menuitem" data-section="hero" aria-current="page">Home</a></li>
                 <li role="none"><a href="#about" class="nav-link" role="menuitem" data-section="about">About</a></li>
                 <li role="none"><a href="#skills" class="nav-link" role="menuitem" data-section="skills">Skills</a></li>
+                <li role="none"><a href="#projects" class="nav-link" role="menuitem" data-section="projects">Projects</a></li>
                 <li role="none"><a href="#experience" class="nav-link" role="menuitem" data-section="experience">Experience</a></li>
                 <li role="none"><a href="#contact" class="nav-link" role="menuitem" data-section="contact">Contact</a></li>
             </ul>
@@ -70,6 +70,7 @@
             <li role="none"><a href="#hero" class="mobile-nav-link" role="menuitem" data-section="hero">Home</a></li>
             <li role="none"><a href="#about" class="mobile-nav-link" role="menuitem" data-section="about">About</a></li>
             <li role="none"><a href="#skills" class="mobile-nav-link" role="menuitem" data-section="skills">Skills</a></li>
+            <li role="none"><a href="#projects" class="mobile-nav-link" role="menuitem" data-section="projects">Projects</a></li>
             <li role="none"><a href="#experience" class="mobile-nav-link" role="menuitem" data-section="experience">Experience</a></li>
             <li role="none"><a href="#contact" class="mobile-nav-link" role="menuitem" data-section="contact">Contact</a></li>
         </ul>
@@ -88,7 +89,7 @@
                 <p class="subtitle">Computer Science Student</p>
                 <p class="tagline">Passionate about building innovative solutions through code. I love solving complex problems and creating impactful software that makes a difference.</p>
                 <div class="cta-buttons">
-                    <a href="#about" class="btn btn-primary">View My Work</a>
+                    <a href="#projects" class="btn btn-primary">See My Projects</a>
                     <a href="#contact" class="btn btn-secondary">Contact Me</a>
                 </div>
             </div>
@@ -156,6 +157,91 @@
             </div>
         </section>
 
+        <!-- Projects Section -->
+        <section id="projects" aria-label="Projects section">
+            <div class="container">
+                <h2 data-animate="fade-up">Featured Projects</h2>
+                <p class="section-subtitle" data-animate="fade-up">A selection of my recent work and learning projects</p>
+                
+                <div class="projects-grid">
+                    <!-- Project 1: Smart Helmet -->
+                    <article class="project-card glass" data-animate="fade-up" data-stagger="1">
+                        <div class="project-image">
+                            <div class="project-placeholder">
+                                <i class="fas fa-hard-hat"></i>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <h3>Smart Helmet for Rider Safety</h3>
+                            <p class="project-description">An embedded systems project using Arduino and sensors to enhance rider safety. Features include helmet detection, accident alerts, and emergency notifications.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Arduino</span>
+                                <span class="tech-tag">C/C++</span>
+                                <span class="tech-tag">Sensors</span>
+                                <span class="tech-tag">IoT</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link" target="_blank" rel="noopener noreferrer">
+                                    <i class="fab fa-github"></i> View Code
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Project 2: Portfolio Website -->
+                    <article class="project-card glass" data-animate="fade-up" data-stagger="2">
+                        <div class="project-image">
+                            <div class="project-placeholder">
+                                <i class="fas fa-globe"></i>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <h3>Portfolio Website</h3>
+                            <p class="project-description">A modern, responsive portfolio built with pure HTML, CSS, and JavaScript. Features glassmorphism design, particle animations, and smooth scroll interactions.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">HTML5</span>
+                                <span class="tech-tag">CSS3</span>
+                                <span class="tech-tag">JavaScript</span>
+                                <span class="tech-tag">Canvas API</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://github.com/pratyushdeosingh/portfolio" class="project-link" target="_blank" rel="noopener noreferrer">
+                                    <i class="fab fa-github"></i> View Code
+                                </a>
+                                <a href="#" class="project-link" target="_blank" rel="noopener noreferrer">
+                                    <i class="fas fa-external-link-alt"></i> Live Demo
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Project 3: DSA Practice -->
+                    <article class="project-card glass" data-animate="fade-up" data-stagger="3">
+                        <div class="project-image">
+                            <div class="project-placeholder">
+                                <i class="fas fa-code"></i>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <h3>DSA Problem Solving</h3>
+                            <p class="project-description">Comprehensive practice of Data Structures and Algorithms on LeetCode. Solved 100+ problems covering arrays, trees, graphs, and dynamic programming.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">C++</span>
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">Algorithms</span>
+                                <span class="tech-tag">LeetCode</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://leetcode.com/u/pratyushdeosingh/" class="project-link" target="_blank" rel="noopener noreferrer">
+                                    <i class="fas fa-external-link-alt"></i> View Profile
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
         <!-- Experience Section -->
         <section id="experience" aria-label="Education and experience section">
             <div class="container">
@@ -170,6 +256,26 @@
                             <h4>VIT Chennai</h4>
                             <span class="period">2025 - Present</span>
                             <p class="description">Currently pursuing Bachelor of Technology in Computer Science and Engineering. Focusing on Data Structures, Algorithms, and core computer science fundamentals.</p>
+                        </div>
+                    </article>
+
+                    <article class="timeline-entry right" data-animate="fade-up" data-stagger="2" tabindex="0" aria-label="Certification: Data Structures and Algorithms Certificate">
+                        <div class="timeline-card glass">
+                            <div class="timeline-dot" aria-hidden="true"></div>
+                            <h3>DSA Certification</h3>
+                            <h4>Online Learning Platform</h4>
+                            <span class="period">2024 - 2025</span>
+                            <p class="description">Completed comprehensive Data Structures and Algorithms course. Mastered arrays, trees, graphs, and dynamic programming with 100+ problems solved.</p>
+                        </div>
+                    </article>
+
+                    <article class="timeline-entry left" data-animate="fade-up" data-stagger="3" tabindex="0" aria-label="Workshop: Embedded Systems Workshop">
+                        <div class="timeline-card glass">
+                            <div class="timeline-dot" aria-hidden="true"></div>
+                            <h3>Embedded Systems Workshop</h3>
+                            <h4>VIT Chennai</h4>
+                            <span class="period">2024</span>
+                            <p class="description">Hands-on workshop on Arduino programming and sensor integration. Built IoT projects and learned real-time data processing.</p>
                         </div>
                     </article>
                 </div>
@@ -189,6 +295,12 @@
                     </a>
                 </div>
                 
+                <div class="resume-section">
+                    <a href="#" class="btn btn-secondary" download>
+                        <i class="fas fa-download"></i> Download Resume
+                    </a>
+                </div>
+                
                 <div class="social-icons-container contact-icons">
                     <a href="https://github.com/pratyushdeosingh" target="_blank" rel="noopener noreferrer" class="social-icon-link" aria-label="GitHub">
                         <i class="fab fa-github"></i>
@@ -202,8 +314,8 @@
                     <a href="https://mail.google.com/mail/?view=cm&fs=1&to=workforpratyush@gmail.com" target="_blank" rel="noopener noreferrer" class="social-icon-link" aria-label="Gmail">
                         <i class="fab fa-google"></i>
                     </a>
-                    <a href="https://leetcode.com/u/pratyushdeosingh/" target="_blank" rel="noopener noreferrer" class="social-icon-link leetcode-text-icon" aria-label="LeetCode">
-                        <span class="leetcode-text">LC</span>
+                    <a href="https://leetcode.com/u/pratyushdeosingh/" target="_blank" rel="noopener noreferrer" class="social-icon-link" aria-label="LeetCode">
+                        <i class="fas fa-code"></i>
                     </a>
                 </div>
             </div>
