@@ -685,6 +685,20 @@ ol {
   height: 24px;
 }
 
+/* Social Link with Label - Hero Section */
+.social-link-with-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.social-label {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
 /* Responsive Hero - Mobile First Breakpoints */
 @media (min-width: 768px) {
   .hero-content h1 {
