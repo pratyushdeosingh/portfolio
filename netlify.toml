@@ -1,16 +1,12 @@
 [build]
-  # No build command needed for static site
-  publish = "/"
-
-[[redirects]]
-  # SPA routing - redirect all paths to index.html
-  from = "/*"
-  to = "/index.html"
-  status = 200
+  command = "npm run build"
+  publish = ".next"
 
 [build.environment]
-  # Environment variables (if needed in future)
-  NODE_VERSION = "18"
+  NODE_VERSION = "20"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
 
 [[headers]]
   # Security headers
