@@ -17,11 +17,28 @@ export function ScrollReveal() {
       return undefined;
     }
 
+    elements.forEach((element) => {
+      const stagger = Number(element.dataset.stagger ?? '0');
+
+      if (!Number.isNaN(stagger) && stagger > 0) {
+        element.style.transitionDelay = `${stagger * 80}ms`;
+      }
+
+      element.style.willChange = 'opacity, transform';
+    });
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('is-visible');
+            entry.target.addEventListener(
+              'transitionend',
+              () => {
+                (entry.target as HTMLElement).style.willChange = 'auto';
+              },
+              { once: true }
+            );
             observer.unobserve(entry.target);
           }
         });

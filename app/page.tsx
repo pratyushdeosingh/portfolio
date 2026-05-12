@@ -14,6 +14,9 @@ import {
 export default function HomePage() {
   return (
     <>
+      <a href="#main-content" className="skip-link">
+        Skip to main content
+      </a>
       <SiteHeader />
 
       <main id="main-content">
@@ -41,7 +44,7 @@ export default function HomePage() {
         </section>
 
         <section id="about" aria-label="About me section">
-          <div className="container" data-animate="fade-up">
+          <div className="container section-shell" data-animate="fade-up">
             <h2>About Me</h2>
             <div className="about-container bio-only">
               <div className="bio-content full-width glass">
@@ -54,7 +57,7 @@ export default function HomePage() {
         </section>
 
         <section id="skills" aria-label="Technical skills section">
-          <div className="container" data-animate="fade-up">
+          <div className="container section-shell" data-animate="fade-up">
             <h2>Technical Skills</h2>
             <div className="skills-grid">
               {skillGroups.map((group, index) => (
@@ -65,7 +68,6 @@ export default function HomePage() {
                   data-stagger={index + 1}
                   tabIndex={0}
                   aria-label={`${group.title}: ${group.tags.join(', ')}`}
-                  style={{ transitionDelay: `${index * 90}ms` }}
                 >
                   <h3>{group.title}</h3>
                   <div className="skill-tags">
@@ -82,7 +84,7 @@ export default function HomePage() {
         </section>
 
         <section id="projects" aria-label="Projects section">
-          <div className="container">
+          <div className="container section-shell">
             <h2 data-animate="fade-up">Featured Projects</h2>
             <p className="section-subtitle" data-animate="fade-up">
               A selection of my recent work and learning projects
@@ -98,7 +100,6 @@ export default function HomePage() {
                     className="project-card glass"
                     data-animate="fade-up"
                     data-stagger={index + 1}
-                    style={{ transitionDelay: `${index * 110}ms` }}
                   >
                     <div className="project-image">
                       <div className="project-placeholder" aria-hidden="true">
@@ -141,7 +142,7 @@ export default function HomePage() {
         </section>
 
         <section id="experience" aria-label="Education and experience section">
-          <div className="container">
+          <div className="container section-shell">
             <h2 data-animate="fade-up">Education & Experience</h2>
             <div className="timeline-container" data-animate="fade-up">
               <div className="timeline-line" aria-hidden="true" />
@@ -153,7 +154,7 @@ export default function HomePage() {
                   data-animate="fade-up"
                   tabIndex={0}
                   aria-label={`${entry.title}: ${entry.organization}, ${entry.period}`}
-                  style={{ transitionDelay: `${index * 120}ms` }}
+                  data-stagger={index + 1}
                 >
                   <div className="timeline-card glass">
                     <div className="timeline-dot" aria-hidden="true" />
@@ -169,7 +170,7 @@ export default function HomePage() {
         </section>
 
         <section id="contact" aria-label="Contact section">
-          <div className="container" data-animate="fade-up">
+          <div className="container section-shell" data-animate="fade-up">
             <h2>Get In Touch</h2>
             <div className="contact-card glass">
               <a className="email-link" href="mailto:workforpratyush@gmail.com">

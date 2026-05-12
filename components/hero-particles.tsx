@@ -42,7 +42,8 @@ export function HeroParticles() {
       return undefined;
     }
 
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let reducedMotion = motionQuery.matches;
 
     if (reducedMotion) {
       canvas.style.display = 'none';
@@ -53,6 +54,8 @@ export function HeroParticles() {
     const particles: Particle[] = [];
     const mouse = { x: -1000, y: -1000 };
     let animationFrame = 0;
+    let isRunning = false;
+    let heroInView = true;
     let resizeTimeout: number | undefined;
 
     const getDimensions = () => {
@@ -75,7 +78,7 @@ export function HeroParticles() {
 
     const createParticles = () => {
       const { width, height } = getDimensions();
-      const count = window.innerWidth < 768 ? 40 : 70;
+      const count = window.innerWidth < 768 ? 30 : 56;
 
       particles.length = 0;
 
@@ -105,6 +108,7 @@ export function HeroParticles() {
     const drawConnections = () => {
       const { width, height } = getDimensions();
       const maxDistance = 110;
+      const maxDistanceSq = maxDistance * maxDistance;
 
       for (let i = 0; i < particles.length; i += 1) {
         let connections = 0;
@@ -116,10 +120,11 @@ export function HeroParticles() {
 
           const dx = particles[i].x - particles[j].x;
           const dy = particles[i].y - particles[j].y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
+          const distanceSq = dx * dx + dy * dy;
 
-          if (distance < maxDistance) {
-            const alpha = (1 - distance / maxDistance) * 0.28;
+          if (distanceSq < maxDistanceSq) {
+            const distanceRatio = Math.sqrt(distanceSq) / maxDistance;
+            const alpha = (1 - distanceRatio) * 0.28;
             context.beginPath();
             context.moveTo(particles[i].x, particles[i].y);
             context.lineTo(particles[j].x, particles[j].y);
@@ -141,6 +146,10 @@ export function HeroParticles() {
     };
 
     const animate = () => {
+      if (!isRunning) {
+        return;
+      }
+
       const { width, height } = getDimensions();
 
       context.clearRect(0, 0, width, height);
@@ -151,10 +160,13 @@ export function HeroParticles() {
 
         const dx = mouse.x - particle.x;
         const dy = mouse.y - particle.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
+        const distanceSq = dx * dx + dy * dy;
+        const interactionDistance = 150;
+        const interactionDistanceSq = interactionDistance * interactionDistance;
 
-        if (distance < 150) {
-          const force = (150 - distance) / 150;
+        if (distanceSq < interactionDistanceSq) {
+          const distance = Math.sqrt(distanceSq);
+          const force = (interactionDistance - distance) / interactionDistance;
           const angle = Math.atan2(dy, dx);
           particle.vx -= Math.cos(angle) * force * 0.02;
           particle.vy -= Math.sin(angle) * force * 0.02;
@@ -190,9 +202,27 @@ export function HeroParticles() {
       animationFrame = window.requestAnimationFrame(animate);
     };
 
+    const stopAnimation = () => {
+      if (!isRunning) {
+        return;
+      }
+
+      isRunning = false;
+      window.cancelAnimationFrame(animationFrame);
+    };
+
+    const startAnimation = () => {
+      if (isRunning || reducedMotion || document.hidden || !heroInView) {
+        return;
+      }
+
+      isRunning = true;
+      animationFrame = window.requestAnimationFrame(animate);
+    };
+
     resize();
     createParticles();
-    animate();
+    startAnimation();
 
     const handleResize = () => {
       window.clearTimeout(resizeTimeout);
@@ -202,15 +232,59 @@ export function HeroParticles() {
       }, 200);
     };
 
+    const handleVisibility = () => {
+      if (document.hidden) {
+        stopAnimation();
+      } else {
+        startAnimation();
+      }
+    };
+
+    const visibilityObserver = new IntersectionObserver(
+      ([entry]) => {
+        heroInView = entry.isIntersecting;
+        if (heroInView) {
+          startAnimation();
+        } else {
+          stopAnimation();
+        }
+      },
+      {
+        threshold: 0.06
+      }
+    );
+
+    const handleReducedMotionChange = (event: MediaQueryListEvent) => {
+      reducedMotion = event.matches;
+
+      if (reducedMotion) {
+        canvas.style.display = 'none';
+        stopAnimation();
+      } else {
+        canvas.style.display = 'block';
+        resize();
+        createParticles();
+        startAnimation();
+      }
+    };
+
     hero?.addEventListener('pointermove', updateMouse);
     hero?.addEventListener('pointerleave', resetMouse);
     window.addEventListener('resize', handleResize);
+    document.addEventListener('visibilitychange', handleVisibility);
+    motionQuery.addEventListener('change', handleReducedMotionChange);
+    if (hero) {
+      visibilityObserver.observe(hero);
+    }
 
     return () => {
-      window.cancelAnimationFrame(animationFrame);
+      stopAnimation();
       hero?.removeEventListener('pointermove', updateMouse);
       hero?.removeEventListener('pointerleave', resetMouse);
       window.removeEventListener('resize', handleResize);
+      document.removeEventListener('visibilitychange', handleVisibility);
+      motionQuery.removeEventListener('change', handleReducedMotionChange);
+      visibilityObserver.disconnect();
 
       if (resizeTimeout) {
         window.clearTimeout(resizeTimeout);

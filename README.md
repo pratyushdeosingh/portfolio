@@ -16,10 +16,22 @@ npm install
 npm run dev
 ```
 
+Use this to run it on `localhost:3000` and expose it for LAN/device testing:
+
+```bash
+npm run dev:host
+```
+
 ## Build
 
 ```bash
 npm run build
+```
+
+## Type-check
+
+```bash
+npm run typecheck
 ```
 
 ## Deploy to Netlify
@@ -40,6 +52,12 @@ The repo includes `netlify.toml` for Next.js hosting. Netlify should use the bui
 - Update text/data in `data/portfolio.ts`
 - Update layout/meta in `app/layout.tsx`
 - Update visuals in `app/globals.css`
+
+## UI and animation notes
+
+- Scroll reveals use `data-animate` and optional `data-stagger`
+- Hero particles auto-pause when the tab is hidden or the hero leaves viewport
+- Reduced-motion settings disable heavy motion automatically
 
 ## Live site
 
