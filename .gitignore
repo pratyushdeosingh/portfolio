@@ -1,0 +1,7 @@
+.sisyphus/
+.next/
+node_modules/
+out/
+coverage/
+.netlify/
+tsconfig.tsbuildinfo
