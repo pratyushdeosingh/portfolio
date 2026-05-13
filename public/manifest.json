@@ -1,0 +1,17 @@
+{
+  "name": "Pratyush Deo Singh Portfolio",
+  "short_name": "PDS Portfolio",
+  "description": "Portfolio of Pratyush Deo Singh, Computer Science Student at VIT Chennai",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#020617",
+  "theme_color": "#06b6d4",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
