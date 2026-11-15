@@ -123,7 +123,7 @@ export const projects = [
   {
     title: 'DSA Problem Solving',
     description:
-      'Ongoing practice of Data Structures and Algorithms on LeetCode. Solved 100+ problems covering arrays, trees, graphs, and dynamic programming.',
+      'Ongoing practice of Data Structures and Algorithms on LeetCode, covering arrays, trees, graphs, and dynamic programming.',
     tags: ['C++', 'Python', 'Algorithms', 'LeetCode'],
     icon: 'code',
     actions: [
@@ -138,12 +138,20 @@ export const projects = [
 
 export const timelineEntries = [
   {
-    title: 'B.Tech Computer Science — First Year Completed',
-    organization: 'VIT Chennai',
-    period: '2025 — Present',
+    title: 'B.Tech, Computer Science and Engineering',
+    organization: 'Vellore Institute of Technology, Chennai',
+    period: '2025 — 2029',
     description:
-      'Completed first year with strong academic performance. Coursework includes programming fundamentals in C and C++, data structures, discrete mathematics, and digital logic design. Active member of coding clubs and hackathon participant.',
-    tags: ['C', 'C++', 'DSA', 'Discrete Math', 'Digital Logic']
+      'Currently pursuing my degree. Coursework so far covers programming in C and C++, data structures, database systems, discrete mathematics, and digital logic design. Active member of coding clubs and hackathon participant.',
+    tags: ['C', 'C++', 'DSA', 'DBMS', 'Discrete Math', 'Digital Logic']
+  },
+  {
+    title: 'Senior Secondary Education',
+    organization: 'DAV Centenary Public School',
+    period: '2023 — 2025',
+    description:
+      'Completed my schooling here, where I first got into programming with C++ and Python.',
+    tags: ['C++', 'Python']
   }
 ];
 
@@ -195,10 +203,10 @@ export const socialLinks = [
 
 export const contactEmail = 'workforpratyush@gmail.com';
 
-export const stats = [
-  { value: 100, suffix: '+', label: 'LeetCode problems solved' },
-  { value: 4, suffix: '', label: 'Programming languages' },
-  { value: 6, suffix: '', label: 'Projects built' }
+export const highlights = [
+  { label: 'Current focus', value: 'Data Structures & Algorithms' },
+  { label: 'Building', value: 'Full-stack & AI projects' },
+  { label: 'Based in', value: 'Chennai, India' }
 ];
 
 export const marqueeItems = [

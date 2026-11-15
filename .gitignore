@@ -8,3 +8,5 @@ out/
 coverage/
 .netlify/
 tsconfig.tsbuildinfo
+
+.vercel
