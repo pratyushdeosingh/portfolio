@@ -1,13 +1,16 @@
-# Pratyush Deo Singh - Portfolio
+# Pratyush Deo Singh — Portfolio
 
-A modern portfolio built with **Next.js**, **React**, and **TypeScript**. It keeps the same dark, glassy aesthetic but moves the site into a cleaner component-based architecture with smoother motion and better maintainability.
+Personal portfolio built with **Next.js**, **React**, **TypeScript** and **Tailwind CSS**.
+
+Live site: https://pratyushdeosingh.netlify.app
 
 ## Stack
 
-- Next.js App Router
-- React 19
-- TypeScript
-- CSS with a custom design system
+- Next.js 15 (App Router, static export)
+- React 19 + TypeScript
+- Tailwind CSS 4
+- Framer Motion for animation, Lenis for smooth scrolling
+- Lucide icons
 
 ## Run locally
 
@@ -16,49 +19,41 @@ npm install
 npm run dev
 ```
 
-Use this to run it on `localhost:3000` and expose it for LAN/device testing:
+To expose it on your network for testing on other devices:
 
 ```bash
 npm run dev:host
 ```
 
-## Build
+## Build and type-check
 
 ```bash
 npm run build
-```
-
-## Type-check
-
-```bash
 npm run typecheck
 ```
 
-## Deploy to Netlify
+## Project structure
 
-The repo includes `netlify.toml` for Next.js hosting. Netlify should use the build command above and the `@netlify/plugin-nextjs` adapter.
-
-## Content
-
-- Hero with particle animation
-- About section
-- Skills grid
-- Featured projects
-- Education timeline
-- Contact links
+```
+app/
+  layout.tsx            Fonts, metadata, global wrappers
+  page.tsx              Section order
+  globals.css           Design tokens and utilities
+  sections/             Hero, About, Experience, Skills, Projects, FAQ, Contact
+  components/
+    layout/             Navigation and footer
+    effects/            Particle background, smooth scrolling
+    ui/                 Reveal, cards, icons, marquee, counters
+data/portfolio.ts       All site content
+public/                 Favicon, OG image, manifest
+```
 
 ## Edit content
 
-- Update text/data in `data/portfolio.ts`
-- Update layout/meta in `app/layout.tsx`
-- Update visuals in `app/globals.css`
+All text, projects, skills, links and stats live in `data/portfolio.ts`.
+Colours and fonts are defined at the top of `app/globals.css`.
 
-## UI and animation notes
+## Motion
 
-- Scroll reveals use `data-animate` and optional `data-stagger`
-- Hero particles auto-pause when the tab is hidden or the hero leaves viewport
-- Reduced-motion settings disable heavy motion automatically
-
-## Live site
-
-https://pratyushdeosingh.netlify.app
+Animations respect the visitor's reduced-motion setting, and the hero particle
+canvas pauses whenever it is off screen.

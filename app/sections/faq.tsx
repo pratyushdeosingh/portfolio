@@ -1,61 +1,80 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { useRef, useState } from 'react';
-import { useInView } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Plus } from 'lucide-react';
+import { useState } from 'react';
 import { faqItems } from '@/data/portfolio';
-import { ChevronDown } from 'lucide-react';
+import { Accent, Reveal, SectionHeading } from '@/app/components/ui/reveal';
+import { cn } from '@/app/lib/utils';
 
 export function FAQSection() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
     <section id="faq" className="section-padding" aria-label="Frequently asked questions">
-      <div className="max-w-3xl mx-auto px-6 lg:px-8">
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 1 }}
-        >
-          <p className="text-sm text-foreground-dim tracking-widest uppercase mb-8">06 — FAQ</p>
+      <div className="container-page">
+        <div className="grid gap-x-16 lg:grid-cols-[1fr_1.3fr]">
+          <SectionHeading index="05" label="FAQ" className="lg:sticky lg:top-32 lg:self-start">
+            Common <Accent>questions</Accent>
+          </SectionHeading>
 
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-16 tracking-tight">
-            Common Questions
-          </h2>
-
-          <div className="space-y-4">
-            {faqItems.map((item, index) => (
-              <motion.div
-                key={item.question}
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
-                className="border border-border rounded-xl overflow-hidden"
-              >
-                <button
-                  onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                  className="w-full flex items-center justify-between px-6 py-5 text-left"
-                  aria-expanded={openIndex === index}
-                >
-                  <span className="text-foreground font-medium pr-4">{item.question}</span>
-                  <ChevronDown
-                    className={`w-5 h-5 text-foreground-dim shrink-0 transition-transform duration-300 ${
-                      openIndex === index ? 'rotate-180' : ''
-                    }`}
-                  />
-                </button>
-                {openIndex === index && (
-                  <div className="px-6 pb-5">
-                    <p className="text-foreground-muted leading-relaxed">{item.answer}</p>
-                  </div>
-                )}
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+          <Reveal>
+            <ul className="border-t border-border">
+              {faqItems.map((item, index) => {
+                const isOpen = openIndex === index;
+                return (
+                  <li key={item.question} className="border-b border-border">
+                    <h3>
+                      <button
+                        type="button"
+                        onClick={() => setOpenIndex(isOpen ? null : index)}
+                        aria-expanded={isOpen}
+                        aria-controls={`faq-panel-${index}`}
+                        id={`faq-button-${index}`}
+                        className="group flex w-full items-center justify-between gap-6 py-6 text-left"
+                      >
+                        <span
+                          className={cn(
+                            'text-lg font-medium transition-colors md:text-xl',
+                            isOpen ? 'text-foreground' : 'text-foreground-muted group-hover:text-foreground'
+                          )}
+                        >
+                          {item.question}
+                        </span>
+                        <span
+                          className={cn(
+                            'flex h-9 w-9 shrink-0 items-center justify-center rounded-full border transition-all duration-500',
+                            isOpen
+                              ? 'rotate-45 border-primary/50 bg-primary-muted text-primary'
+                              : 'border-border text-foreground-dim group-hover:border-border-hover'
+                          )}
+                        >
+                          <Plus className="h-4 w-4" aria-hidden="true" />
+                        </span>
+                      </button>
+                    </h3>
+                    <AnimatePresence initial={false}>
+                      {isOpen && (
+                        <motion.div
+                          id={`faq-panel-${index}`}
+                          role="region"
+                          aria-labelledby={`faq-button-${index}`}
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                          className="overflow-hidden"
+                        >
+                          <p className="max-w-xl pb-7 pr-12 leading-relaxed text-foreground-muted">{item.answer}</p>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </li>
+                );
+              })}
+            </ul>
+          </Reveal>
+        </div>
       </div>
     </section>
   );

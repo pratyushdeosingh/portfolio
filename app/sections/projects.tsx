@@ -1,72 +1,88 @@
-'use client';
-
-import { motion } from 'framer-motion';
-import { useRef } from 'react';
-import { useInView } from 'framer-motion';
+import {
+  ArrowUpRight,
+  Code2,
+  Globe,
+  HardHat,
+  Landmark,
+  ShieldAlert,
+  Stethoscope,
+  type LucideIcon
+} from 'lucide-react';
 import { projects } from '@/data/portfolio';
-import { ArrowUpRight } from 'lucide-react';
+import { Accent, Reveal, SectionHeading } from '@/app/components/ui/reveal';
+import { SpotlightCard } from '@/app/components/ui/spotlight-card';
+
+const projectIcons: Record<string, LucideIcon> = {
+  shield: ShieldAlert,
+  landmark: Landmark,
+  stethoscope: Stethoscope,
+  helmet: HardHat,
+  globe: Globe,
+  code: Code2
+};
 
 export function ProjectsSection() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
-
   return (
-    <section id="projects" className="section-padding" aria-label="Projects section">
-      <div className="max-w-5xl mx-auto px-6 lg:px-8">
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 1 }}
+    <section id="projects" className="section-padding" aria-label="Projects">
+      <div className="container-page">
+        <SectionHeading
+          index="04"
+          label="Projects"
+          description="Things I've built solo and with teams, from fraud detection and fintech agents to embedded hardware."
         >
-          <p className="text-sm text-foreground-dim tracking-widest uppercase mb-8">04 — Projects</p>
+          Featured <Accent>work</Accent>
+        </SectionHeading>
 
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-16 tracking-tight">
-            Featured Work
-          </h2>
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+          {projects.map((project, index) => {
+            const Icon = projectIcons[project.icon] ?? Code2;
+            return (
+              <Reveal key={project.title} delay={index * 0.1} className="h-full">
+                <SpotlightCard className="group flex h-full flex-col p-7 hover:-translate-y-1 md:p-8">
+                  <div className="mb-10 flex items-start justify-between">
+                    <span className="flex h-12 w-12 items-center justify-center rounded-xl border border-border bg-primary-muted text-primary transition-transform duration-500 group-hover:scale-110">
+                      <Icon className="h-5 w-5" aria-hidden="true" />
+                    </span>
+                    <span className="font-mono text-xs text-foreground-dim">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                  </div>
 
-          <div className="space-y-0">
-            {projects.map((project, index) => (
-              <motion.a
-                key={project.title}
-                href={project.actions[0]?.href || '#'}
-                target={project.actions[0]?.external ? '_blank' : undefined}
-                rel={project.actions[0]?.external ? 'noopener noreferrer' : undefined}
-                initial={{ opacity: 0, y: 30 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.2 + index * 0.15 }}
-                className="group block border-t border-border py-8 md:py-12 transition-colors hover:bg-background-elevated/50"
-              >
-                <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-3">
-                      <span className="text-sm font-mono text-foreground-dim">
-                        {String(index + 1).padStart(2, '0')}
-                      </span>
-                      <h3 className="text-2xl md:text-3xl font-semibold text-foreground group-hover:text-primary transition-colors">
-                        {project.title}
-                      </h3>
-                    </div>
-                    <p className="text-foreground-muted max-w-xl">{project.description}</p>
-                    <div className="flex flex-wrap gap-2 mt-4">
-                      {project.tags.map(tag => (
-                        <span key={tag} className="text-xs text-foreground-dim">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
+                  <h3 className="text-2xl font-semibold leading-tight tracking-tight text-foreground">
+                    {project.title}
+                  </h3>
+                  <p className="mt-4 leading-relaxed text-foreground-muted">{project.description}</p>
+
+                  <ul className="mt-6 flex flex-wrap gap-2">
+                    {project.tags.map(tag => (
+                      <li
+                        key={tag}
+                        className="rounded-full border border-border px-3 py-1 font-mono text-[11px] uppercase tracking-wider text-foreground-dim"
+                      >
+                        {tag}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div className="mt-auto flex flex-wrap gap-x-6 gap-y-3 pt-8">
+                    {project.actions.map(action => (
+                      <a
+                        key={action.label}
+                        href={action.href}
+                        target={action.external ? '_blank' : undefined}
+                        rel={action.external ? 'noopener noreferrer' : undefined}
+                        className="group/link inline-flex items-center gap-1.5 text-sm font-medium text-foreground transition-colors hover:text-primary"
+                      >
+                        {action.label}
+                        <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5" />
+                      </a>
+                    ))}
                   </div>
-                  <div className="shrink-0 mt-4 md:mt-0">
-                    <div className="w-12 h-12 rounded-full border border-border flex items-center justify-center group-hover:border-foreground/30 transition-colors">
-                      <ArrowUpRight className="w-5 h-5 text-foreground-dim group-hover:text-foreground transition-colors" />
-                    </div>
-                  </div>
-                </div>
-              </motion.a>
-            ))}
-            <div className="border-t border-border" />
-          </div>
-        </motion.div>
+                </SpotlightCard>
+              </Reveal>
+            );
+          })}
+        </div>
       </div>
     </section>
   );

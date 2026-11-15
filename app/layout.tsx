@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, JetBrains_Mono } from 'next/font/google';
+import { Instrument_Serif, Inter, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import { SmoothScroll } from '@/app/components/effects/smooth-scroll';
+import { ScrollProgress } from '@/app/components/ui/scroll-progress';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -15,6 +16,14 @@ const jetbrainsMono = JetBrains_Mono({
   display: 'swap',
   variable: '--font-jetbrains',
   preload: true
+});
+
+const instrumentSerif = Instrument_Serif({
+  subsets: ['latin'],
+  weight: '400',
+  style: ['normal', 'italic'],
+  display: 'swap',
+  variable: '--font-instrument'
 });
 
 export const metadata: Metadata = {
@@ -85,13 +94,13 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#050505' }
+    { media: '(prefers-color-scheme: light)', color: '#060709' },
+    { media: '(prefers-color-scheme: dark)', color: '#060709' }
   ],
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
-  colorScheme: 'dark light'
+  colorScheme: 'dark'
 };
 
 const structuredData = {
@@ -128,7 +137,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`}>
+    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable}`}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -139,6 +148,8 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen bg-background font-sans antialiased">
+        <ScrollProgress />
+        <div className="noise" aria-hidden="true" />
         <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>

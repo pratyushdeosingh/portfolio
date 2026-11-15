@@ -1,54 +1,57 @@
-'use client';
-
-import { motion } from 'framer-motion';
-import { useRef } from 'react';
-import { useInView } from 'framer-motion';
+import { Braces, BrainCircuit, Globe, Wrench, type LucideIcon } from 'lucide-react';
 import { skillGroups } from '@/data/portfolio';
+import { Accent, Reveal, SectionHeading } from '@/app/components/ui/reveal';
+import { SpotlightCard } from '@/app/components/ui/spotlight-card';
+
+const groupIcons: Record<string, LucideIcon> = {
+  Languages: Braces,
+  'Web Development': Globe,
+  'Core Concepts': BrainCircuit,
+  'Tools & Technologies': Wrench
+};
 
 export function SkillsSection() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
-
   return (
-    <section id="skills" className="section-padding" aria-label="Technical skills section">
-      <div className="max-w-5xl mx-auto px-6 lg:px-8">
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 1 }}
+    <section id="skills" className="section-padding" aria-label="Technical skills">
+      <div className="container-page">
+        <SectionHeading
+          index="03"
+          label="Skills"
+          description="The languages, concepts and tools I reach for most, and the ones I'm actively getting better at."
         >
-          <p className="text-sm text-foreground-dim tracking-widest uppercase mb-8">03 — Skills</p>
+          Technologies &amp; <Accent>tools</Accent>
+        </SectionHeading>
 
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-16 tracking-tight">
-            Technologies & Tools
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            {skillGroups.map((group, index) => (
-              <motion.div
-                key={group.title as string}
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
-              >
-                <h3 className="text-lg font-medium text-foreground mb-4 tracking-wide">
-                  {group.title as string}
-                </h3>
-                <div className="flex flex-wrap gap-3">
-                  {group.tags.map((tag: string) => (
-                    <span
-                      key={tag}
-                      className="px-4 py-2 text-sm text-foreground-muted border border-border rounded-full hover:border-foreground/20 hover:text-foreground transition-colors"
-                    >
-                      {tag}
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          {skillGroups.map((group, index) => {
+            const Icon = groupIcons[group.title] ?? Braces;
+            return (
+              <Reveal key={group.title} delay={index * 0.08} className="h-full">
+                <SpotlightCard className="h-full p-7 md:p-8">
+                  <div className="mb-8 flex items-center justify-between">
+                    <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-border bg-primary-muted text-primary">
+                      <Icon className="h-5 w-5" aria-hidden="true" />
                     </span>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+                    <span className="font-mono text-xs text-foreground-dim">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                  </div>
+                  <h3 className="mb-5 text-xl font-semibold tracking-tight text-foreground">{group.title}</h3>
+                  <ul className="flex flex-wrap gap-2">
+                    {group.tags.map(tag => (
+                      <li
+                        key={tag}
+                        className="rounded-full border border-border bg-white/[0.02] px-3.5 py-1.5 text-sm text-foreground-muted transition-colors hover:border-primary/40 hover:text-foreground"
+                      >
+                        {tag}
+                      </li>
+                    ))}
+                  </ul>
+                </SpotlightCard>
+              </Reveal>
+            );
+          })}
+        </div>
       </div>
     </section>
   );

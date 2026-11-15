@@ -5,7 +5,6 @@ import { AboutSection } from '@/app/sections/about';
 import { ExperienceSection } from '@/app/sections/experience';
 import { SkillsSection } from '@/app/sections/skills';
 import { ProjectsSection } from '@/app/sections/projects';
-import { TestimonialsSection } from '@/app/sections/testimonials';
 import { FAQSection } from '@/app/sections/faq';
 import { ContactSection } from '@/app/sections/contact';
 
@@ -26,7 +25,6 @@ export default function HomePage() {
         <ExperienceSection />
         <SkillsSection />
         <ProjectsSection />
-        <TestimonialsSection />
         <FAQSection />
         <ContactSection />
       </main>

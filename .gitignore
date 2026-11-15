@@ -1,4 +1,7 @@
 .sisyphus/
+.omo/
+.claude/
+.npm-cache/
 .next/
 node_modules/
 out/

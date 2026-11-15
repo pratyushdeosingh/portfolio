@@ -1,44 +1,47 @@
-'use client';
-
-import { motion } from 'framer-motion';
-import { useRef } from 'react';
-import { useInView } from 'framer-motion';
-import { aboutParagraphs } from '@/data/portfolio';
+import { aboutParagraphs, stats } from '@/data/portfolio';
+import { AnimatedCounter } from '@/app/components/ui/animated-counter';
+import { Accent, Reveal, SectionHeading } from '@/app/components/ui/reveal';
 
 export function AboutSection() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
-
   return (
-    <section id="about" className="section-padding" aria-label="About me section">
-      <div className="max-w-5xl mx-auto px-6 lg:px-8">
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 1 }}
-        >
-          <p className="text-sm text-foreground-dim tracking-widest uppercase mb-8">01 — About</p>
+    <section id="about" className="section-padding" aria-label="About me">
+      <div className="container-page">
+        <div className="grid gap-x-16 lg:grid-cols-[1fr_1.1fr]">
+          <SectionHeading index="01" label="About" className="lg:sticky lg:top-32 lg:self-start">
+            A student who loves <Accent>building things</Accent> and knowing why they work
+          </SectionHeading>
 
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-12 tracking-tight">
-            A driven student with a passion for{' '}
-            <span className="text-gradient">building things</span>
-          </h2>
+          <div>
+            <div className="space-y-6">
+              {aboutParagraphs.map((paragraph, index) => (
+                <Reveal key={index} delay={index * 0.08}>
+                  <p
+                    className={
+                      index === 0
+                        ? 'text-xl leading-relaxed text-foreground md:text-2xl'
+                        : 'text-lg leading-relaxed text-foreground-muted'
+                    }
+                  >
+                    {paragraph}
+                  </p>
+                </Reveal>
+              ))}
+            </div>
 
-          <div className="space-y-8 max-w-3xl">
-            {aboutParagraphs.map((paragraph, index) => (
-              <motion.p
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.8, delay: 0.2 + index * 0.15 }}
-                className="text-lg md:text-xl text-foreground-muted leading-relaxed"
-              >
-                {paragraph}
-              </motion.p>
-            ))}
+            <Reveal delay={0.15}>
+              <dl className="mt-14 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-3">
+                {stats.map(stat => (
+                  <div key={stat.label} className="flex flex-col-reverse gap-2 bg-background-elevated p-6">
+                    <dt className="text-sm text-foreground-dim">{stat.label}</dt>
+                    <dd className="text-4xl font-semibold tracking-tight text-foreground md:text-5xl">
+                      <AnimatedCounter target={stat.value} suffix={stat.suffix} duration={1.6} />
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </Reveal>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

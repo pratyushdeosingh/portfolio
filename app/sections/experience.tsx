@@ -1,59 +1,43 @@
-'use client';
-
-import { motion } from 'framer-motion';
-import { useRef } from 'react';
-import { useInView } from 'framer-motion';
+import { GraduationCap } from 'lucide-react';
 import { timelineEntries } from '@/data/portfolio';
+import { Accent, Reveal, SectionHeading } from '@/app/components/ui/reveal';
 
 export function ExperienceSection() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
-
   return (
     <section id="experience" className="section-padding" aria-label="Experience and education">
-      <div className="max-w-5xl mx-auto px-6 lg:px-8">
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 1 }}
-        >
-          <p className="text-sm text-foreground-dim tracking-widest uppercase mb-8">02 — Experience</p>
+      <div className="container-page">
+        <SectionHeading index="02" label="Experience">
+          Education &amp; <Accent>journey</Accent>
+        </SectionHeading>
 
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-16 tracking-tight">
-            Education & Journey
-          </h2>
+        <ol className="relative ml-5 border-l border-border pl-10 md:ml-6 md:pl-14">
+          {timelineEntries.map((entry, index) => (
+            <li key={entry.title} className="relative pb-12 last:pb-0">
+              <span className="absolute -left-[calc(2.5rem+1.25rem+0.5px)] top-0 flex h-10 w-10 items-center justify-center rounded-full border border-border-hover bg-background-elevated text-primary md:-left-[calc(3.5rem+1.25rem+0.5px)]">
+                <GraduationCap className="h-[18px] w-[18px]" aria-hidden="true" />
+              </span>
 
-          <div className="space-y-12">
-            {timelineEntries.map((entry, index) => (
-              <motion.div
-                key={entry.title}
-                initial={{ opacity: 0, y: 30 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.2 + index * 0.15 }}
-                className="border-t border-border pt-8"
-              >
-                <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-4">
-                  <div>
-                    <h3 className="text-xl md:text-2xl font-semibold text-foreground">{entry.title}</h3>
-                    <p className="text-foreground-muted mt-1">{entry.organization}</p>
-                  </div>
-                  <span className="text-sm text-foreground-dim font-mono">{entry.period}</span>
-                </div>
-                <p className="text-foreground-muted leading-relaxed max-w-2xl">{entry.description}</p>
+              <Reveal delay={index * 0.1}>
+                <p className="mb-3 font-mono text-xs uppercase tracking-[0.22em] text-primary">{entry.period}</p>
+                <h3 className="text-2xl font-semibold tracking-tight text-foreground md:text-3xl">{entry.title}</h3>
+                <p className="mt-1 text-lg text-foreground-muted">{entry.organization}</p>
+                <p className="mt-5 max-w-2xl leading-relaxed text-foreground-muted">{entry.description}</p>
                 {entry.tags && (
-                  <div className="flex flex-wrap gap-2 mt-4">
+                  <ul className="mt-6 flex flex-wrap gap-2">
                     {entry.tags.map(tag => (
-                      <span key={tag} className="text-xs text-foreground-dim border border-border px-3 py-1 rounded-full">
+                      <li
+                        key={tag}
+                        className="rounded-full border border-border bg-surface px-3 py-1 text-xs text-foreground-muted"
+                      >
                         {tag}
-                      </span>
+                      </li>
                     ))}
-                  </div>
+                  </ul>
                 )}
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+              </Reveal>
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   );
