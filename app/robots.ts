@@ -16,6 +16,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: '/_next/'
       }
     ],
-    sitemap: 'https://pratyushdeosingh.netlify.app/sitemap.xml'
+    sitemap: 'https://pratyushdeosingh.vercel.app/sitemap.xml'
   };
 }

@@ -27,7 +27,7 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://pratyushdeosingh.netlify.app'),
+  metadataBase: new URL('https://pratyushdeosingh.vercel.app'),
   title: 'Pratyush Deo Singh | Computer Science Student & Developer',
   description:
     'Portfolio of Pratyush Deo Singh, Computer Science Student at VIT Chennai. Passionate about building innovative solutions through code.',
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: 'website',
-    url: 'https://pratyushdeosingh.netlify.app',
+    url: 'https://pratyushdeosingh.vercel.app',
     title: 'Pratyush Deo Singh | Computer Science Student & Developer',
     description:
       'Portfolio of Pratyush Deo Singh, Computer Science Student at VIT Chennai. Passionate about building innovative solutions through code.',
@@ -107,7 +107,7 @@ const structuredData = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: 'Pratyush Deo Singh',
-  url: 'https://pratyushdeosingh.netlify.app',
+  url: 'https://pratyushdeosingh.vercel.app',
   jobTitle: 'Computer Science Student',
   alumniOf: {
     '@type': 'CollegeOrUniversity',
@@ -141,7 +141,7 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://pratyushdeosingh.netlify.app" />
+        <link rel="dns-prefetch" href="https://pratyushdeosingh.vercel.app" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}

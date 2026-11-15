@@ -115,7 +115,7 @@ export const projects = [
       },
       {
         label: 'Live Demo',
-        href: 'https://pratyushdeosingh.netlify.app',
+        href: 'https://pratyushdeosingh.vercel.app',
         external: true
       }
     ]

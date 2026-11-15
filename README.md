@@ -2,7 +2,7 @@
 
 Personal portfolio built with **Next.js**, **React**, **TypeScript** and **Tailwind CSS**.
 
-Live site: https://pratyushdeosingh.netlify.app
+Live site: https://pratyushdeosingh.vercel.app
 
 ## Stack
 

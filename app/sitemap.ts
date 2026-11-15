@@ -5,7 +5,7 @@ export const dynamic = 'force-static';
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: 'https://pratyushdeosingh.netlify.app',
+      url: 'https://pratyushdeosingh.vercel.app',
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 1
