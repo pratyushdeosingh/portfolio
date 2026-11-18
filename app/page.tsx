@@ -2,6 +2,7 @@ import { Navigation } from '@/app/components/layout/navigation';
 import { Footer } from '@/app/components/layout/footer';
 import { HeroSection } from '@/app/sections/hero';
 import { StatementSection } from '@/app/sections/statement';
+import { GallerySection } from '@/app/sections/gallery';
 import { JourneySection } from '@/app/sections/journey';
 import { SplitSection } from '@/app/sections/split';
 import { ProjectsSection } from '@/app/sections/projects';
@@ -22,6 +23,7 @@ export default function HomePage() {
       <main id="main-content">
         <HeroSection />
         <StatementSection />
+        <GallerySection />
         <JourneySection />
         <SplitSection />
         <ProjectsSection />

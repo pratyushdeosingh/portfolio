@@ -22,7 +22,7 @@ const SIDES = [
 /** Two big stacked titles, each with a lime scribble that appears on hover. */
 export function SplitSection() {
   return (
-    <section data-nav="light" aria-label="Explore" className="relative overflow-hidden bg-cream py-28 md:py-40">
+    <section data-nav="light" aria-label="Explore" className="relative overflow-hidden bg-stone py-28 md:py-40">
       <div className="absolute inset-0 text-ink/[0.07]">
         <TopoLines seed={5} />
       </div>

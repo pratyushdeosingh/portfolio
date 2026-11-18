@@ -42,7 +42,7 @@ function smoothClosedPath(points: [number, number][]) {
 
 const cache = new Map<number, string[]>();
 
-function buildContours(seed: number) {
+export function buildContours(seed: number) {
   const hit = cache.get(seed);
   if (hit) return hit;
 
