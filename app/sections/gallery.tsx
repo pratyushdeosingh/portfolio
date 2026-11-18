@@ -13,7 +13,6 @@ import { Code2, GraduationCap, HardHat, MapPin, ShieldAlert, type LucideIcon } f
 import { useLayoutEffect, useRef, useState } from 'react';
 import { projects } from '@/data/portfolio';
 import { TopoLines } from '@/app/components/effects/topo-lines';
-import { Signature } from '@/app/components/effects/signature';
 import { PhotoPlaceholder, type PlaceholderVariant } from '@/app/components/ui/photo-placeholder';
 import { cn } from '@/app/lib/utils';
 
@@ -27,7 +26,7 @@ type Frame =
       align: 'top' | 'center' | 'bottom';
       seed: number;
     }
-  | { kind: 'quote'; text: string; signature?: boolean }
+  | { kind: 'quote'; text: string }
   | { kind: 'stat'; value: string; label: string };
 
 const FRAMES: Frame[] = [
@@ -37,11 +36,7 @@ const FRAMES: Frame[] = [
   { kind: 'photo', caption: 'Hackathon nights, 2025', variant: 'lime', size: 'wide', align: 'top', seed: 58 },
   { kind: 'stat', value: String(projects.length).padStart(2, '0'), label: 'Projects shipped' },
   { kind: 'photo', caption: 'Building ARGUS', variant: 'duotone', icon: ShieldAlert, size: 'tall', align: 'bottom', seed: 9 },
-  {
-    kind: 'quote',
-    text: 'I enjoy solving problems, experimenting with ideas, and continuously improving.',
-    signature: true
-  },
+  { kind: 'quote', text: 'I enjoy solving problems, experimenting with ideas, and continuously improving.' },
   { kind: 'photo', caption: 'Smart Safety Helmet', variant: 'topo', icon: HardHat, size: 'small', align: 'top', seed: 31 },
   { kind: 'photo', caption: 'Chennai, 2026', variant: 'halftone', icon: MapPin, size: 'wide', align: 'center', seed: 4 }
 ];
@@ -79,7 +74,6 @@ function FrameItem({ frame, index }: { frame: Frame; index: number }) {
     return (
       <blockquote className="w-[min(78vw,22rem)] shrink-0 self-center">
         <p className="font-serif text-2xl leading-snug text-ink md:text-3xl">&ldquo;{frame.text}&rdquo;</p>
-        {frame.signature && <Signature className="mt-4 w-28 text-olive" strokeWidth={9} />}
       </blockquote>
     );
   }
@@ -101,14 +95,13 @@ function Track({ innerRef, style }: { innerRef?: React.Ref<HTMLDivElement>; styl
   return (
     <motion.div ref={innerRef} style={style} className="flex h-full w-max items-stretch gap-[6vw] pl-4 pr-[12vw] md:pl-10">
       {/* Intro panel */}
-      <div className="flex w-[min(80vw,28rem)] shrink-0 flex-col justify-center">
-        <p className="eyebrow mb-4 text-mute">Moments · scroll sideways</p>
-        <h2 className="text-ink">
-          <span className="display-serif block text-[clamp(3.5rem,9vw,8rem)]">In</span>
-          <span className="display-sans block text-[clamp(3.5rem,9vw,8rem)]">Frames</span>
+      <div className="flex max-w-[80vw] shrink-0 flex-col justify-center">
+        <h2 className="whitespace-nowrap text-ink">
+          <span className="display-serif block text-[clamp(3.2rem,7vw,6.5rem)]">Between</span>
+          <span className="display-sans block text-[clamp(3.2rem,7vw,6.5rem)]">Commits</span>
         </h2>
         <p className="mt-6 max-w-xs text-sm leading-relaxed text-mute">
-          Campus, code and the builds in between. Real photos are on the way; for now, each frame is a placeholder.
+          Campus, code, late-night builds and everything in between.
         </p>
       </div>
 
@@ -182,7 +175,7 @@ export function GallerySection() {
         </div>
 
         {/* Progress + counter */}
-        <div className="absolute inset-x-4 bottom-5 flex items-center gap-4 md:inset-x-10">
+        <div className="absolute inset-x-4 bottom-8 flex items-center gap-4 md:inset-x-10">
           <span className="eyebrow tabular-nums text-ink">
             {String(current).padStart(2, '0')} / {String(photoCount).padStart(2, '0')}
           </span>

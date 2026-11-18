@@ -1,7 +1,6 @@
 import { GraduationCap, MapPin, Target, Wrench } from 'lucide-react';
 import { highlights, timelineEntries } from '@/data/portfolio';
 import { TopoLines } from '@/app/components/effects/topo-lines';
-import { Signature } from '@/app/components/effects/signature';
 import { MaskLine, Parallax, Reveal } from '@/app/components/ui/reveal';
 
 const highlightIcons = [Target, Wrench, MapPin];
@@ -65,7 +64,6 @@ export function JourneySection() {
                 I enjoy <strong className="font-semibold italic">solving problems</strong>, experimenting with ideas,
                 and <strong className="font-semibold italic">continuously improving</strong>.
               </blockquote>
-              <Signature className="mt-4 w-32 text-olive" strokeWidth={9} />
             </Reveal>
           </Parallax>
 

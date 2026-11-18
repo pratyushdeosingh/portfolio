@@ -1,6 +1,6 @@
 import { ArrowUpRight } from 'lucide-react';
 import { TopoLines } from '@/app/components/effects/topo-lines';
-import { Parallax, Reveal } from '@/app/components/ui/reveal';
+import { Reveal } from '@/app/components/ui/reveal';
 
 const SIDES = [
   {
@@ -25,18 +25,6 @@ export function SplitSection() {
     <section data-nav="light" aria-label="Explore" className="relative overflow-hidden bg-stone py-28 md:py-40">
       <div className="absolute inset-0 text-ink/[0.07]">
         <TopoLines seed={5} />
-      </div>
-
-      {/* Oversized code glyphs at the edges */}
-      <div className="pointer-events-none absolute inset-y-0 -left-[4vw] hidden items-center sm:flex" aria-hidden="true">
-        <Parallax speed={0.35}>
-          <span className="display-serif block text-[30vw] leading-none text-lime md:text-[22vw]">{'{'}</span>
-        </Parallax>
-      </div>
-      <div className="pointer-events-none absolute inset-y-0 -right-[4vw] hidden items-center sm:flex" aria-hidden="true">
-        <Parallax speed={-0.35}>
-          <span className="display-serif block text-[30vw] leading-none text-lime md:text-[22vw]">{'}'}</span>
-        </Parallax>
       </div>
 
       <div className="container-page relative grid gap-16 sm:grid-cols-2 sm:gap-6 md:max-w-4xl">

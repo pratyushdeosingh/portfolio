@@ -4,7 +4,6 @@ import { ArrowUp, ArrowUpRight, Check, Copy } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { contactEmail, navLinks, socialLinks } from '@/data/portfolio';
 import { TopoLines } from '@/app/components/effects/topo-lines';
-import { Signature } from '@/app/components/effects/signature';
 import { Magnetic } from '@/app/components/ui/magnetic';
 import { MaskLine } from '@/app/components/ui/reveal';
 
@@ -59,7 +58,6 @@ export function Footer() {
             </div>
 
             <div className="relative flex flex-col items-center text-center">
-              <Signature className="mb-2 w-40 md:w-52" strokeWidth={7} />
               <h2 className="text-[clamp(2.8rem,8.5vw,7.5rem)]">
                 <MaskLine>
                   <span className="display-sans">Always </span>

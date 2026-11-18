@@ -4,7 +4,6 @@ import { motion, useReducedMotion, useScroll, useTransform, type MotionValue } f
 import { useRef } from 'react';
 import { aboutParagraphs } from '@/data/portfolio';
 import { TopoLines } from '@/app/components/effects/topo-lines';
-import { Signature } from '@/app/components/effects/signature';
 import { Marquee } from '@/app/components/ui/marquee';
 import { Monogram, RotatingBadge } from '@/app/components/ui/monogram';
 import { Reveal } from '@/app/components/ui/reveal';
@@ -60,7 +59,7 @@ export function StatementSection() {
         <TopoLines seed={23} />
       </div>
 
-      {/* Giant moving type with the signature scrawled over it */}
+      {/* Giant moving type */}
       <div className="relative pt-24 md:pt-32" aria-hidden="true">
         <Marquee speed={40} className="text-cream/90">
           {ROW_A.map(word => (
@@ -78,10 +77,6 @@ export function StatementSection() {
             </span>
           ))}
         </Marquee>
-
-        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <Signature className="w-[min(78vw,640px)] drop-shadow-[0_6px_24px_rgba(0,0,0,0.35)]" strokeWidth={7} delay={0.2} />
-        </div>
       </div>
 
       <div className="container-page relative mt-20 flex flex-col items-center md:mt-28">

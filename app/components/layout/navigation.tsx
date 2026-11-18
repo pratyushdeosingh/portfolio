@@ -85,7 +85,7 @@ export function Navigation() {
               onDark ? 'text-cream' : 'text-ink'
             )}
           >
-            <span className="display-serif text-[15px] tracking-[0.01em] md:text-lg">Pratyush</span>
+            <span className="display-serif text-[15px] font-semibold tracking-[0.01em] md:text-lg">Pratyush</span>
             <span className="display-sans text-[15px] md:text-lg">Deo Singh</span>
           </a>
 

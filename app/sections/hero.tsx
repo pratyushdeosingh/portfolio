@@ -1,24 +1,54 @@
 'use client';
 
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
-import { ArrowDown, ArrowUpRight } from 'lucide-react';
+import { ArrowDown } from 'lucide-react';
 import { useRef } from 'react';
-import { heroTagline, projects } from '@/data/portfolio';
-import { TopoLines } from '@/app/components/effects/topo-lines';
-import { HelmetPortrait } from '@/app/components/effects/helmet-portrait';
+import { heroTagline } from '@/data/portfolio';
+import { TopoLines, buildContours } from '@/app/components/effects/topo-lines';
+import { PaintReveal } from '@/app/components/effects/paint-reveal';
 import { Monogram, RotatingBadge } from '@/app/components/ui/monogram';
-import { ProjectGlyph } from '@/app/components/ui/project-glyph';
+import { cn } from '@/app/lib/utils';
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 // Starts after the loader has wiped away.
 const START = 1.9;
 
-function Line({ children, delay, className }: { children: React.ReactNode; delay: number; className?: string }) {
+// Lime "livery" fill with dark contour stripes, used for the painted copy of the name.
+const LIVERY = (() => {
+  const paths = buildContours(303)
+    .map(d => `<path d='${d}'/>`)
+    .join('');
+  const svg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 1000'><rect width='1600' height='1000' fill='#d2ff00'/><g fill='none' stroke='#111112' stroke-width='14'>${paths}</g></svg>`;
+  return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
+})();
+
+const liveryStyle: React.CSSProperties = {
+  backgroundImage: LIVERY,
+  backgroundSize: '1200px 750px',
+  backgroundPosition: 'center',
+  WebkitBackgroundClip: 'text',
+  backgroundClip: 'text',
+  color: 'transparent',
+  WebkitTextStroke: '1.5px #111112'
+};
+
+function Line({
+  children,
+  delay,
+  className,
+  style
+}: {
+  children: React.ReactNode;
+  delay: number;
+  className?: string;
+  style?: React.CSSProperties;
+}) {
   const reduce = useReducedMotion();
   return (
-    <span className={`-mb-[0.08em] block overflow-hidden pb-[0.08em] ${className ?? ''}`}>
+    <span className={cn('-mb-[0.08em] block overflow-hidden pb-[0.08em]', className)}>
       <motion.span
         className="block"
+        style={style}
         initial={reduce ? false : { y: '105%' }}
         animate={{ y: 0 }}
         transition={{ duration: 1.1, delay, ease: EASE }}
@@ -26,6 +56,20 @@ function Line({ children, delay, className }: { children: React.ReactNode; delay
         {children}
       </motion.span>
     </span>
+  );
+}
+
+function NameLines({ painted = false }: { painted?: boolean }) {
+  const style = painted ? liveryStyle : undefined;
+  return (
+    <>
+      <Line delay={START + 0.05} style={style} className="display-serif text-[clamp(3.6rem,16vw,15rem)]">
+        Pratyush
+      </Line>
+      <Line delay={START + 0.15} style={style} className="display-sans text-[clamp(3.4rem,15.5vw,14.5rem)]">
+        Deo Singh
+      </Line>
+    </>
   );
 }
 
@@ -37,7 +81,6 @@ export function HeroSection() {
   const nameOpacity = useTransform(scrollYProgress, [0, 0.6], [1, reduce ? 1 : 0]);
   const nameScale = useTransform(scrollYProgress, [0, 1], [1, reduce ? 1 : 0.9]);
   const topoY = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : -120]);
-  const featured = projects[0];
 
   const fade = (delay: number) => ({
     initial: reduce ? false : ({ opacity: 0, y: 16 } as const),
@@ -57,85 +100,54 @@ export function HeroSection() {
         <TopoLines seed={11} />
       </motion.div>
 
-      <div className="container-page relative z-10 grid flex-1 grid-cols-1 lg:grid-cols-[1.1fr_1fr]">
-        {/* Copy */}
-        <motion.div
-          style={{ y: nameY, scale: nameScale, opacity: nameOpacity }}
-          className="flex flex-col items-center justify-center pb-6 pt-28 text-center lg:items-start lg:pb-40 lg:text-left"
-        >
-          <motion.p {...fade(START)} className="eyebrow mb-6 flex items-center gap-3 text-mute">
-            <span className="h-px w-8 bg-mute/50" />
-            Computer Science · VIT Chennai
-          </motion.p>
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-1/2 top-[46%] h-[40vmin] w-[60vmin] -translate-x-1/2 -translate-y-1/2 rounded-[45%_55%_60%_40%/50%_40%_60%_50%] bg-lime/50 blur-3xl"
+      />
 
-          <h1 className="text-ink">
-            <Line delay={START + 0.05} className="display-serif text-[clamp(3.4rem,14vw,10.5rem)] lg:text-[clamp(4rem,9.5vw,10.5rem)]">
-              Pratyush
-            </Line>
-            <Line delay={START + 0.15} className="display-sans text-[clamp(3.2rem,13.5vw,10rem)] lg:text-[clamp(3.8rem,9vw,10rem)]">
-              Deo Singh
-            </Line>
-          </h1>
-
-          <motion.p
-            {...fade(START + 0.45)}
-            className="mt-8 max-w-md text-balance text-sm leading-relaxed text-mute md:text-base"
-          >
-            {heroTagline}
-          </motion.p>
-        </motion.div>
-
-        {/* Portrait with the helmet reveal */}
-        <motion.div
-          initial={reduce ? false : { opacity: 0, y: 60 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, delay: START + 0.2, ease: EASE }}
-          className="relative flex min-h-[62svh] items-end justify-center lg:min-h-0"
-        >
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute bottom-[18%] left-1/2 h-[55%] w-[80%] -translate-x-1/2 rounded-[45%_55%_60%_40%/50%_40%_60%_50%] bg-lime/50 blur-3xl"
-          />
-          <HelmetPortrait className="relative h-[min(60svh,110vw)] lg:h-[min(84svh,52vw)]" />
-
-          <p className="eyebrow absolute left-0 top-[16%] hidden max-w-[11rem] items-start gap-2 text-ink xl:flex">
-            <span className="relative mt-0.5 flex h-2 w-2 shrink-0">
-              <span className="absolute inset-0 animate-ping rounded-full bg-lime" />
-              <span className="relative h-2 w-2 rounded-full bg-ink" />
-            </span>
-            <span className="[@media(hover:none)]:hidden">Move your cursor to paint the helmet</span>
-            <span className="hidden [@media(hover:none)]:inline">Watch the helmet paint itself</span>
-          </p>
-
-          <motion.div {...fade(START + 0.7)} className="absolute bottom-24 right-0 hidden lg:block">
-            <RotatingBadge text="OPEN TO INTERNSHIPS · CLASS OF 2029 · " className="h-24 w-24 text-ink">
-              <Monogram className="h-7 w-7 text-ink" />
-            </RotatingBadge>
-          </motion.div>
-        </motion.div>
-      </div>
-
-      {/* Bottom-left "now building" widget */}
-      <motion.a
-        {...fade(START + 0.6)}
-        href="#projects"
-        className="group absolute bottom-5 left-4 z-10 hidden w-[10.5rem] rounded-md border border-ink/15 bg-cream/80 p-2.5 backdrop-blur-sm transition-colors hover:border-ink/40 sm:block md:left-6"
+      <motion.div
+        style={{ y: nameY, scale: nameScale, opacity: nameOpacity }}
+        className="container-page relative z-10 flex flex-1 flex-col items-center justify-center pb-36 pt-28 text-center"
       >
-        <span className="eyebrow block text-mute">Now building</span>
-        <span className="mt-2 flex aspect-[4/3] items-center justify-center rounded-sm bg-olive">
-          <ProjectGlyph name={featured.icon} className="h-10 w-10 text-lime transition-transform duration-500 group-hover:scale-110" />
-        </span>
-        <span className="mt-2 flex items-center justify-between">
-          <span className="display-sans text-xs">{featured.short}</span>
-          <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:rotate-45" />
-        </span>
-      </motion.a>
+        <motion.p {...fade(START)} className="eyebrow mb-6 flex items-center gap-3 text-mute">
+          <span className="h-px w-8 bg-mute/50" />
+          Computer Science · VIT Chennai
+          <span className="h-px w-8 bg-mute/50" />
+        </motion.p>
 
-      {/* Scroll cue */}
+        <h1 className="text-ink">
+          <PaintReveal areaRef={ref} overlay={<NameLines painted />}>
+            <NameLines />
+          </PaintReveal>
+        </h1>
+
+        <motion.p
+          {...fade(START + 0.45)}
+          className="mx-auto mt-8 max-w-md text-balance text-sm leading-relaxed text-mute md:text-base"
+        >
+          {heroTagline}
+        </motion.p>
+
+        <motion.p {...fade(START + 0.6)} className="eyebrow mt-8 flex items-center gap-2 text-ink">
+          <span className="relative flex h-2 w-2 shrink-0">
+            <span className="absolute inset-0 animate-ping rounded-full bg-lime" />
+            <span className="relative h-2 w-2 rounded-full bg-ink" />
+          </span>
+          <span className="[@media(hover:none)]:hidden">Move your cursor over my name</span>
+          <span className="hidden [@media(hover:none)]:inline">Watch my name paint itself</span>
+        </motion.p>
+      </motion.div>
+
+      <motion.div {...fade(START + 0.7)} className="absolute bottom-6 left-4 z-10 hidden sm:block md:left-6">
+        <RotatingBadge text="OPEN TO INTERNSHIPS · CLASS OF 2029 · " className="h-24 w-24 text-ink">
+          <Monogram className="h-7 w-7 text-ink" />
+        </RotatingBadge>
+      </motion.div>
+
       <motion.a
         {...fade(START + 0.8)}
         href="#about"
-        className="eyebrow absolute bottom-6 left-1/2 z-10 flex -translate-x-1/2 items-center gap-2 text-ink lg:left-[calc(55%-5rem)] lg:translate-x-0"
+        className="eyebrow absolute bottom-6 right-4 z-10 flex items-center gap-2 text-ink md:right-6"
       >
         Scroll
         <span className="flex h-9 w-9 items-center justify-center rounded-md bg-ink text-lime">

@@ -41,18 +41,23 @@ export function MaskLine({
   className?: string;
 }) {
   const reduce = useReducedMotion();
+  // The visibility check runs on the outer (unclipped) span; the inner one is hidden by the
+  // mask until then, so watching it directly would never report it as in view.
   return (
-    <span className={cn('-mb-[0.1em] block overflow-hidden pb-[0.1em]', className)}>
+    <motion.span
+      className={cn('-mb-[0.1em] block overflow-hidden pb-[0.1em]', className)}
+      initial={reduce ? false : 'hidden'}
+      whileInView="shown"
+      viewport={{ once: true, margin: '0px 0px -10% 0px' }}
+    >
       <motion.span
         className="block"
-        initial={reduce ? false : { y: '105%' }}
-        whileInView={{ y: 0 }}
-        viewport={{ once: true }}
+        variants={{ hidden: { y: '105%' }, shown: { y: 0 } }}
         transition={{ duration: 1, delay, ease: EASE }}
       >
         {children}
       </motion.span>
-    </span>
+    </motion.span>
   );
 }
 
