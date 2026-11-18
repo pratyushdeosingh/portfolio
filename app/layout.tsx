@@ -4,6 +4,9 @@ import './globals.css';
 import { SmoothScroll } from '@/app/components/effects/smooth-scroll';
 import { Loader } from '@/app/components/effects/loader';
 
+// '' on Vercel, '/portfolio' on GitHub Pages (see next.config.ts).
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
+
 const monaSans = Mona_Sans({
   subsets: ['latin'],
   display: 'swap',
@@ -68,11 +71,11 @@ export const metadata: Metadata = {
     images: ['/og-image.svg']
   },
   icons: {
-    icon: '/favicon.svg',
-    shortcut: '/favicon.svg',
-    apple: '/favicon.svg'
+    icon: `${basePath}/favicon.svg`,
+    shortcut: `${basePath}/favicon.svg`,
+    apple: `${basePath}/favicon.svg`
   },
-  manifest: '/manifest.json',
+  manifest: `${basePath}/manifest.json`,
   robots: {
     index: true,
     follow: true,

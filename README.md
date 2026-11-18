@@ -4,6 +4,7 @@ Personal portfolio of a Computer Science student at VIT Chennai, built with **Ne
 **TypeScript** and **Tailwind CSS**.
 
 Live site: https://pratyushdeosingh.vercel.app
+Mirror on GitHub Pages: https://pratyushdeosingh.github.io/portfolio/
 
 ## Design
 
@@ -66,6 +67,20 @@ npm run typecheck
 
 Stop the dev server before running `npm run build`: both use the `.next` folder, and building while the
 dev server runs corrupts its cache. If that happens, delete `.next` and start the dev server again.
+
+## Deployment
+
+Both hosts deploy automatically on every push to `main`:
+
+- **Vercel** builds from the repository root and serves the site at the domain root.
+- **GitHub Pages** runs `.github/workflows/deploy-pages.yml`, which builds with `GITHUB_PAGES=true`. That
+  flag makes `next.config.ts` add the `/portfolio` base path the Pages URL needs. Nothing else differs.
+
+To test the Pages build locally:
+
+```bash
+GITHUB_PAGES=true npm run build
+```
 
 ## Project structure
 
