@@ -1,9 +1,9 @@
 export const navLinks = [
   { href: '#hero', label: 'Home' },
   { href: '#about', label: 'About' },
-  { href: '#experience', label: 'Experience' },
-  { href: '#skills', label: 'Skills' },
   { href: '#projects', label: 'Projects' },
+  { href: '#skills', label: 'Skills' },
+  { href: '#faq', label: 'FAQ' },
   { href: '#contact', label: 'Contact' }
 ];
 
@@ -42,6 +42,8 @@ export const skillGroups = [
 export const projects = [
   {
     title: 'ARGUS — Financial Fraud Intelligence',
+    short: 'ARGUS',
+    label: 'Team of 4',
     description:
       'A fraud-detection prototype that ingests payments, flags suspicious money movement with rules and a graph model, and streams explainable risk scores to a live analyst dashboard. Built with a team of four on synthetic data.',
     tags: ['Python', 'TypeScript', 'Graph ML', 'WebSockets', 'Docker'],
@@ -56,6 +58,8 @@ export const projects = [
   },
   {
     title: 'PRATIN — Agentic Invoice Financing',
+    short: 'PRATIN',
+    label: 'Team of 3',
     description:
       'A simulated marketplace for supply-chain working capital. It reads an invoice PDF, runs explainable risk checks, lets autonomous capital-provider agents price offers, then ranks and settles them. Built with a team of three.',
     tags: ['Python', 'React', 'TypeScript', 'AI Agents', 'Docker'],
@@ -70,6 +74,8 @@ export const projects = [
   },
   {
     title: 'Care Continuum — Telemedicine & EHR',
+    short: 'Care Continuum',
+    label: 'Team of 3',
     description:
       'A telemedicine and health-records app covering patients, appointments, prescriptions, lab results and billing across 18 Oracle tables, with PL/SQL triggers that reject allergy-conflicting medicines and a Cassandra patient timeline. A three-person DBMS course project.',
     tags: ['React', 'Express', 'Oracle', 'PL/SQL', 'Cassandra'],
@@ -89,6 +95,8 @@ export const projects = [
   },
   {
     title: 'Smart Safety Helmet',
+    short: 'Safety Helmet',
+    label: 'IoT build',
     description:
       'An IoT helmet that detects crashes with an MPU6050 motion sensor and triggers a cancellable emergency alert. Arduino firmware streams GPS and motion data through a Node.js bridge to a real-time React dashboard.',
     tags: ['Arduino', 'C++', 'React', 'TypeScript', 'Node.js'],
@@ -103,9 +111,11 @@ export const projects = [
   },
   {
     title: 'Portfolio Website',
+    short: 'Portfolio',
+    label: 'Solo',
     description:
-      'This site. A fast, responsive portfolio built with Next.js, React, and Tailwind CSS, with an interactive canvas background and scroll-driven motion.',
-    tags: ['Next.js', 'React', 'Tailwind CSS', 'Canvas'],
+      'This site. A fast, responsive portfolio built with Next.js, React, and Tailwind CSS, with a topographic visual language, scroll-driven motion and a lime-on-olive palette.',
+    tags: ['Next.js', 'React', 'Tailwind CSS', 'Framer Motion'],
     icon: 'globe',
     actions: [
       {
@@ -122,6 +132,8 @@ export const projects = [
   },
   {
     title: 'DSA Problem Solving',
+    short: 'DSA Practice',
+    label: 'Ongoing',
     description:
       'Ongoing practice of Data Structures and Algorithms on LeetCode, covering arrays, trees, graphs, and dynamic programming.',
     tags: ['C++', 'Python', 'Algorithms', 'LeetCode'],

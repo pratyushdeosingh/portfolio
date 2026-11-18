@@ -1,29 +1,23 @@
 import type { Metadata, Viewport } from 'next';
-import { Instrument_Serif, Inter, JetBrains_Mono } from 'next/font/google';
+import { Mona_Sans, Playfair_Display } from 'next/font/google';
 import './globals.css';
 import { SmoothScroll } from '@/app/components/effects/smooth-scroll';
-import { ScrollProgress } from '@/app/components/ui/scroll-progress';
+import { Loader } from '@/app/components/effects/loader';
 
-const inter = Inter({
+const monaSans = Mona_Sans({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-inter',
+  axes: ['wdth'],
+  variable: '--font-mona',
   preload: true
 });
 
-const jetbrainsMono = JetBrains_Mono({
+const playfair = Playfair_Display({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-jetbrains',
-  preload: true
-});
-
-const instrumentSerif = Instrument_Serif({
-  subsets: ['latin'],
-  weight: '400',
   style: ['normal', 'italic'],
-  display: 'swap',
-  variable: '--font-instrument'
+  variable: '--font-playfair',
+  preload: true
 });
 
 export const metadata: Metadata = {
@@ -94,13 +88,13 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#060709' },
-    { media: '(prefers-color-scheme: dark)', color: '#060709' }
+    { media: '(prefers-color-scheme: light)', color: '#f4f4ed' },
+    { media: '(prefers-color-scheme: dark)', color: '#282c20' }
   ],
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
-  colorScheme: 'dark'
+  colorScheme: 'light'
 };
 
 const structuredData = {
@@ -137,7 +131,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable}`}>
+    <html lang="en" className={`${monaSans.variable} ${playfair.variable}`}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -147,9 +141,8 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
       </head>
-      <body className="min-h-screen bg-background font-sans antialiased">
-        <ScrollProgress />
-        <div className="noise" aria-hidden="true" />
+      <body className="min-h-screen bg-cream font-sans text-ink antialiased">
+        <Loader />
         <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>

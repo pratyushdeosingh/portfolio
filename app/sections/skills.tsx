@@ -1,57 +1,99 @@
-import { Braces, BrainCircuit, Globe, Wrench, type LucideIcon } from 'lucide-react';
-import { skillGroups } from '@/data/portfolio';
-import { Accent, Reveal, SectionHeading } from '@/app/components/ui/reveal';
-import { SpotlightCard } from '@/app/components/ui/spotlight-card';
+import { ArrowUpRight, Braces } from 'lucide-react';
+import { marqueeItems, skillGroups } from '@/data/portfolio';
+import { TopoLines } from '@/app/components/effects/topo-lines';
+import { Marquee } from '@/app/components/ui/marquee';
+import { MaskLine, Reveal } from '@/app/components/ui/reveal';
+import { cn } from '@/app/lib/utils';
 
-const groupIcons: Record<string, LucideIcon> = {
-  Languages: Braces,
-  'Web Development': Globe,
-  'Core Concepts': BrainCircuit,
-  'Tools & Technologies': Wrench
-};
+const tilts = ['md:-rotate-3', 'md:rotate-2', 'md:rotate-1', 'md:-rotate-2'];
 
 export function SkillsSection() {
   return (
-    <section id="skills" className="section-padding" aria-label="Technical skills">
-      <div className="container-page">
-        <SectionHeading
-          index="03"
-          label="Skills"
-          description="The languages, concepts and tools I reach for most, and the ones I'm actively getting better at."
-        >
-          Technologies &amp; <Accent>tools</Accent>
-        </SectionHeading>
+    <section id="skills" data-nav="light" aria-label="Technical skills" className="relative overflow-hidden bg-cream">
+      <div className="absolute inset-0 text-ink/[0.07]">
+        <TopoLines seed={77} />
+      </div>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          {skillGroups.map((group, index) => {
-            const Icon = groupIcons[group.title] ?? Braces;
-            return (
-              <Reveal key={group.title} delay={index * 0.08} className="h-full">
-                <SpotlightCard className="h-full p-7 md:p-8">
-                  <div className="mb-8 flex items-center justify-between">
-                    <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-border bg-primary-muted text-primary">
-                      <Icon className="h-5 w-5" aria-hidden="true" />
-                    </span>
-                    <span className="font-mono text-xs text-foreground-dim">
-                      {String(index + 1).padStart(2, '0')}
-                    </span>
+      <div className="container-page relative grid gap-16 py-28 md:py-40 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+        <div>
+          <Reveal>
+            <p className="eyebrow mb-5 flex items-center gap-2 text-ink">
+              <Braces className="h-3.5 w-3.5" aria-hidden="true" /> Toolkit
+            </p>
+          </Reveal>
+          <h2 className="text-ink">
+            <MaskLine className="display-sans text-[clamp(3rem,7.5vw,6.5rem)]">What I</MaskLine>
+            <MaskLine delay={0.06} className="display-sans text-[clamp(3rem,7.5vw,6.5rem)]">
+              Build
+            </MaskLine>
+            <MaskLine delay={0.12} className="display-serif text-[clamp(3rem,7.5vw,6.5rem)]">
+              With
+            </MaskLine>
+          </h2>
+          <Reveal delay={0.1}>
+            <p className="mt-8 max-w-sm text-sm leading-relaxed text-mute md:text-base">
+              The languages, concepts and tools I reach for most, and how comfortable I am with each of them right now.
+            </p>
+            <a
+              href="#projects"
+              className="eyebrow group mt-8 inline-flex h-10 items-center gap-1.5 rounded-md bg-lime px-4 text-ink transition-transform hover:-translate-y-0.5"
+            >
+              See them in action
+              <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:rotate-45" />
+            </a>
+          </Reveal>
+        </div>
+
+        <ul className="grid gap-5 sm:grid-cols-2">
+          {skillGroups.map((group, i) => (
+            <li key={group.title} className={cn(i % 2 === 1 && 'sm:translate-y-10')}>
+              <Reveal delay={i * 0.08}>
+                <article
+                  className={cn(
+                    'rounded-md p-5 transition-transform duration-500 hover:rotate-0',
+                    tilts[i],
+                    i === 1 ? 'bg-ink text-cream' : i === 2 ? 'bg-lime text-ink' : 'bg-olive text-cream'
+                  )}
+                >
+                  <div className="flex items-baseline justify-between">
+                    <h3 className="display-sans text-lg">{group.title}</h3>
+                    <span className="display-serif text-3xl">{group.proficiency}</span>
                   </div>
-                  <h3 className="mb-5 text-xl font-semibold tracking-tight text-foreground">{group.title}</h3>
-                  <ul className="flex flex-wrap gap-2">
+                  <div className="mt-3 h-1 overflow-hidden rounded-full bg-current/15">
+                    <div
+                      className={cn('h-full rounded-full', i === 2 ? 'bg-ink' : 'bg-lime')}
+                      style={{ width: `${group.proficiency}%` }}
+                    />
+                  </div>
+                  <ul className="mt-5 flex flex-wrap gap-1.5">
                     {group.tags.map(tag => (
                       <li
                         key={tag}
-                        className="rounded-full border border-border bg-white/[0.02] px-3.5 py-1.5 text-sm text-foreground-muted transition-colors hover:border-primary/40 hover:text-foreground"
+                        className={cn(
+                          'rounded-sm px-2 py-1 text-xs',
+                          i === 2 ? 'bg-ink/10' : 'bg-cream/10'
+                        )}
                       >
                         {tag}
                       </li>
                     ))}
                   </ul>
-                </SpotlightCard>
+                </article>
               </Reveal>
-            );
-          })}
-        </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="relative border-y border-ink bg-lime py-3">
+        <Marquee speed={30}>
+          {marqueeItems.map(item => (
+            <span key={item} className="display-sans inline-flex items-center gap-6 px-3 text-sm text-ink">
+              {item}
+              <span aria-hidden="true">✦</span>
+            </span>
+          ))}
+        </Marquee>
       </div>
     </section>
   );

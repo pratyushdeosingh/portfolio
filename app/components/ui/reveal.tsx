@@ -1,7 +1,10 @@
 'use client';
 
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { useRef } from 'react';
 import { cn } from '@/app/lib/utils';
+
+const EASE = [0.16, 1, 0.3, 1] as const;
 
 interface RevealProps {
   children: React.ReactNode;
@@ -11,15 +14,15 @@ interface RevealProps {
 }
 
 /** Fades and lifts its children into place the first time they scroll into view. */
-export function Reveal({ children, delay = 0, y = 28, className }: RevealProps) {
+export function Reveal({ children, delay = 0, y = 32, className }: RevealProps) {
   const reduce = useReducedMotion();
 
   return (
     <motion.div
-      initial={reduce ? false : { opacity: 0, y, filter: 'blur(8px)' }}
-      whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+      initial={reduce ? false : { opacity: 0, y }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '0px 0px -80px 0px' }}
-      transition={{ duration: 0.9, delay, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.9, delay, ease: EASE }}
       className={cn(className)}
     >
       {children}
@@ -27,33 +30,50 @@ export function Reveal({ children, delay = 0, y = 28, className }: RevealProps) 
   );
 }
 
-interface SectionHeadingProps {
-  index: string;
-  label: string;
+/** A line of display type that slides up from behind a mask when it enters the viewport. */
+export function MaskLine({
+  children,
+  delay = 0,
+  className
+}: {
   children: React.ReactNode;
-  description?: string;
+  delay?: number;
   className?: string;
-}
-
-export function SectionHeading({ index, label, children, description, className }: SectionHeadingProps) {
+}) {
+  const reduce = useReducedMotion();
   return (
-    <Reveal className={cn('mb-14 lg:mb-20', className)}>
-      <div className="mb-6 flex items-center gap-4 font-mono text-xs uppercase tracking-[0.25em] text-foreground-dim">
-        <span className="text-primary">{index}</span>
-        <span className="h-px w-10 bg-border-hover" />
-        <span>{label}</span>
-      </div>
-      <h2 className="max-w-3xl text-balance text-4xl font-semibold leading-[1.05] tracking-tight text-foreground md:text-5xl lg:text-6xl">
+    <span className={cn('-mb-[0.1em] block overflow-hidden pb-[0.1em]', className)}>
+      <motion.span
+        className="block"
+        initial={reduce ? false : { y: '105%' }}
+        whileInView={{ y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1, delay, ease: EASE }}
+      >
         {children}
-      </h2>
-      {description && (
-        <p className="mt-6 max-w-xl text-lg leading-relaxed text-foreground-muted">{description}</p>
-      )}
-    </Reveal>
+      </motion.span>
+    </span>
   );
 }
 
-/** Serif italic accent used inside headings. */
-export function Accent({ children }: { children: React.ReactNode }) {
-  return <span className="text-gradient pr-[0.08em] font-serif font-normal italic">{children}</span>;
+/** Moves its children vertically at a different rate from the page scroll. */
+export function Parallax({
+  children,
+  speed = 0.2,
+  className
+}: {
+  children: React.ReactNode;
+  speed?: number;
+  className?: string;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
+  const y = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [speed * 240, speed * -240]);
+
+  return (
+    <motion.div ref={ref} style={{ y }} className={className}>
+      {children}
+    </motion.div>
+  );
 }

@@ -3,21 +3,22 @@
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { ArrowDown, ArrowUpRight } from 'lucide-react';
 import { useRef } from 'react';
-import { heroTagline, marqueeItems, socialLinks } from '@/data/portfolio';
-import { ParticleField } from '@/app/components/effects/particle-field';
-import { Magnetic } from '@/app/components/ui/magnetic';
-import { Marquee } from '@/app/components/ui/marquee';
-import { SocialIcon } from '@/app/components/ui/icons';
+import { heroTagline, projects } from '@/data/portfolio';
+import { TopoLines } from '@/app/components/effects/topo-lines';
+import { Monogram, RotatingBadge } from '@/app/components/ui/monogram';
+import { ProjectGlyph } from '@/app/components/ui/project-glyph';
 
 const EASE = [0.16, 1, 0.3, 1] as const;
+// Starts after the loader has wiped away.
+const START = 1.9;
 
-function RevealLine({ children, delay }: { children: React.ReactNode; delay: number }) {
+function Line({ children, delay, className }: { children: React.ReactNode; delay: number; className?: string }) {
   const reduce = useReducedMotion();
   return (
-    <span className="-mb-[0.12em] block overflow-hidden pb-[0.12em]">
+    <span className={`-mb-[0.08em] block overflow-hidden pb-[0.08em] ${className ?? ''}`}>
       <motion.span
         className="block"
-        initial={reduce ? false : { y: '110%' }}
+        initial={reduce ? false : { y: '105%' }}
         animate={{ y: 0 }}
         transition={{ duration: 1.1, delay, ease: EASE }}
       >
@@ -31,11 +32,14 @@ export function HeroSection() {
   const ref = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
-  const contentY = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : 140]);
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.75], [1, 0]);
+  const nameY = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : 120]);
+  const nameOpacity = useTransform(scrollYProgress, [0, 0.6], [1, reduce ? 1 : 0]);
+  const nameScale = useTransform(scrollYProgress, [0, 1], [1, reduce ? 1 : 0.9]);
+  const topoY = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : -120]);
+  const featured = projects[0];
 
-  const fadeUp = (delay: number) => ({
-    initial: reduce ? false : ({ opacity: 0, y: 20 } as const),
+  const fade = (delay: number) => ({
+    initial: reduce ? false : ({ opacity: 0, y: 16 } as const),
     animate: { opacity: 1, y: 0 },
     transition: { duration: 0.9, delay, ease: EASE }
   });
@@ -44,114 +48,81 @@ export function HeroSection() {
     <section
       ref={ref}
       id="hero"
-      className="relative flex min-h-[100dvh] flex-col overflow-hidden"
+      data-nav="light"
       aria-label="Introduction"
+      className="relative flex min-h-[100svh] flex-col overflow-hidden bg-cream"
     >
-      {/* Backdrop */}
-      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-        <div className="bg-grid absolute inset-0" />
-        <div className="animate-float-slow absolute left-1/2 top-[18%] h-[34rem] w-[34rem] -translate-x-[75%] rounded-full bg-primary/20 blur-[140px]" />
-        <div className="animate-float-slow absolute right-[8%] top-[38%] h-[26rem] w-[26rem] rounded-full bg-indigo-500/15 blur-[130px] [animation-delay:-8s]" />
-        <ParticleField className="absolute inset-0 h-full w-full" />
-        <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-background to-transparent" />
-      </div>
+      <motion.div style={{ y: topoY }} className="absolute inset-0 text-ink/[0.09]">
+        <TopoLines seed={11} />
+      </motion.div>
+
+      {/* Soft lime blob behind the name, echoing the contour peaks */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-1/2 top-[46%] h-[40vmin] w-[60vmin] -translate-x-1/2 -translate-y-1/2 rounded-[45%_55%_60%_40%/50%_40%_60%_50%] bg-lime/60 blur-3xl"
+      />
 
       <motion.div
-        style={{ y: contentY, opacity: contentOpacity }}
-        className="container-page relative z-10 flex flex-1 flex-col items-center justify-center pb-10 pt-28 text-center"
+        style={{ y: nameY, scale: nameScale, opacity: nameOpacity }}
+        className="container-page relative z-10 flex flex-1 flex-col items-center justify-center pb-40 pt-28 text-center"
       >
-        <motion.div
-          {...fadeUp(0.3)}
-          className="mb-8 inline-flex items-center gap-3 rounded-full border border-border bg-surface px-4 py-2 text-xs text-foreground-muted backdrop-blur-sm sm:text-sm"
-        >
-          <span className="relative flex h-2 w-2">
-            <span className="animate-pulse-ring absolute inset-0 rounded-full bg-emerald-400" />
-            <span className="relative h-2 w-2 rounded-full bg-emerald-400" />
-          </span>
-          Open to internships &amp; collaborations
-        </motion.div>
+        <motion.p {...fade(START)} className="eyebrow mb-6 flex items-center gap-3 text-mute">
+          <span className="h-px w-8 bg-mute/50" />
+          Computer Science · VIT Chennai
+          <span className="h-px w-8 bg-mute/50" />
+        </motion.p>
 
-        <h1 className="text-[clamp(3.25rem,12vw,9.5rem)] font-semibold leading-[0.92] tracking-[-0.045em] text-foreground">
-          <RevealLine delay={0.45}>Pratyush</RevealLine>
-          <RevealLine delay={0.58}>
-            <span className="text-gradient px-[0.06em] font-serif font-normal italic tracking-[-0.02em]">
-              Deo Singh
-            </span>
-          </RevealLine>
+        <h1 className="text-ink">
+          <Line delay={START + 0.05} className="display-serif text-[clamp(3.6rem,16vw,15rem)]">
+            Pratyush
+          </Line>
+          <Line delay={START + 0.15} className="display-sans text-[clamp(3.4rem,15.5vw,14.5rem)]">
+            Deo Singh
+          </Line>
         </h1>
 
         <motion.p
-          {...fadeUp(0.95)}
-          className="mt-8 font-mono text-xs uppercase tracking-[0.28em] text-foreground-dim sm:text-sm"
-        >
-          Computer Science · VIT Chennai
-        </motion.p>
-
-        <motion.p
-          {...fadeUp(1.05)}
-          className="mx-auto mt-6 max-w-xl text-balance text-base leading-relaxed text-foreground-muted md:text-lg"
+          {...fade(START + 0.45)}
+          className="mx-auto mt-8 max-w-md text-balance text-sm leading-relaxed text-mute md:text-base"
         >
           {heroTagline}
         </motion.p>
-
-        <motion.div {...fadeUp(1.2)} className="mt-10 flex flex-col items-center gap-4 sm:flex-row">
-          <Magnetic>
-            <a
-              href="#projects"
-              className="group inline-flex items-center gap-2 rounded-full bg-foreground px-7 py-3.5 text-sm font-medium text-background transition-colors hover:bg-white"
-            >
-              View projects
-              <ArrowDown className="h-4 w-4 transition-transform duration-300 group-hover:translate-y-0.5" />
-            </a>
-          </Magnetic>
-          <Magnetic>
-            <a
-              href="#contact"
-              className="group inline-flex items-center gap-2 rounded-full border border-border-hover bg-surface px-7 py-3.5 text-sm font-medium text-foreground backdrop-blur-sm transition-colors hover:border-foreground/40 hover:bg-surface-hover"
-            >
-              Get in touch
-              <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-            </a>
-          </Magnetic>
-        </motion.div>
-
-        <motion.ul {...fadeUp(1.35)} className="mt-10 flex items-center gap-2">
-          {socialLinks.map(link => (
-            <li key={link.label}>
-              <a
-                href={link.href}
-                target={link.href.startsWith('mailto') ? undefined : '_blank'}
-                rel={link.href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
-                aria-label={link.label}
-                className="flex h-10 w-10 items-center justify-center rounded-full text-foreground-dim transition-colors hover:bg-white/[0.06] hover:text-foreground"
-              >
-                <SocialIcon name={link.icon} className="h-[18px] w-[18px]" />
-              </a>
-            </li>
-          ))}
-        </motion.ul>
       </motion.div>
 
-      <motion.div
-        initial={reduce ? false : { opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.6, duration: 1 }}
-        className="relative z-10 border-y border-border bg-background/40 py-4 backdrop-blur-sm"
+      {/* Bottom-left "now building" widget */}
+      <motion.a
+        {...fade(START + 0.6)}
+        href="#projects"
+        className="group absolute bottom-5 left-4 z-10 hidden w-[10.5rem] sm:block rounded-md border border-ink/15 bg-cream/80 p-2.5 backdrop-blur-sm transition-colors hover:border-ink/40 md:left-6"
       >
-        <Marquee speed={38} className="mask-fade-x">
-          {marqueeItems.map(item => (
-            <span
-              key={item}
-              className="mx-6 inline-flex items-center gap-12 font-mono text-xs uppercase tracking-[0.22em] text-foreground-dim"
-            >
-              {item}
-              <span className="text-primary/60" aria-hidden="true">
-                ✦
-              </span>
-            </span>
-          ))}
-        </Marquee>
+        <span className="eyebrow block text-mute">Now building</span>
+        <span className="mt-2 flex aspect-[4/3] items-center justify-center rounded-sm bg-olive">
+          <ProjectGlyph name={featured.icon} className="h-10 w-10 text-lime transition-transform duration-500 group-hover:scale-110" />
+        </span>
+        <span className="mt-2 flex items-center justify-between">
+          <span className="display-sans text-xs">{featured.short}</span>
+          <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:rotate-45" />
+        </span>
+      </motion.a>
+
+      {/* Bottom-centre badge */}
+      <motion.div {...fade(START + 0.7)} className="absolute bottom-6 left-1/2 z-10 hidden -translate-x-1/2 sm:block">
+        <RotatingBadge text="OPEN TO INTERNSHIPS · CLASS OF 2029 · " className="h-24 w-24 text-ink">
+          <Monogram className="h-7 w-7 text-ink" />
+        </RotatingBadge>
       </motion.div>
+
+      {/* Bottom-right scroll cue */}
+      <motion.a
+        {...fade(START + 0.8)}
+        href="#about"
+        className="eyebrow absolute bottom-6 right-4 z-10 flex items-center gap-2 text-ink md:right-6"
+      >
+        Scroll
+        <span className="flex h-9 w-9 items-center justify-center rounded-md bg-ink text-lime">
+          <ArrowDown className="h-4 w-4" />
+        </span>
+      </motion.a>
     </section>
   );
 }
