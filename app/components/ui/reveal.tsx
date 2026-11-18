@@ -4,7 +4,7 @@ import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion
 import { useRef } from 'react';
 import { cn } from '@/app/lib/utils';
 
-const EASE = [0.16, 1, 0.3, 1] as const;
+const EASE = [0.22, 1, 0.36, 1] as const;
 
 interface RevealProps {
   children: React.ReactNode;
@@ -22,7 +22,7 @@ export function Reveal({ children, delay = 0, y = 32, className }: RevealProps) 
       initial={reduce ? false : { opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '0px 0px -80px 0px' }}
-      transition={{ duration: 0.9, delay, ease: EASE }}
+      transition={{ duration: 1.1, delay, ease: EASE }}
       className={cn(className)}
     >
       {children}
@@ -53,7 +53,7 @@ export function MaskLine({
       <motion.span
         className="block"
         variants={{ hidden: { y: '105%' }, shown: { y: 0 } }}
-        transition={{ duration: 1, delay, ease: EASE }}
+        transition={{ duration: 1.15, delay, ease: EASE }}
       >
         {children}
       </motion.span>

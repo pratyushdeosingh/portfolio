@@ -1,14 +1,9 @@
 'use client';
 
-import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { navLinks, projects, socialLinks } from '@/data/portfolio';
-import { ProjectGlyph } from '@/app/components/ui/project-glyph';
-import { RotatingBadge, Monogram } from '@/app/components/ui/monogram';
+import { Menu } from '@/app/components/layout/menu';
 import { cn } from '@/app/lib/utils';
-
-const EASE = [0.76, 0, 0.24, 1] as const;
 
 /** Reads the `data-nav` theme of whatever section sits under the top-left corner of the viewport. */
 function useNavTheme() {
@@ -47,7 +42,6 @@ function useNavTheme() {
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [active, setActive] = useState('#hero');
-  const [hovered, setHovered] = useState<string | null>(null);
   const theme = useNavTheme();
   const onDark = isOpen || theme === 'dark';
 
@@ -69,8 +63,6 @@ export function Navigation() {
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [isOpen]);
-
-  const marked = hovered ?? active;
 
   return (
     <>
@@ -126,102 +118,7 @@ export function Navigation() {
         </nav>
       </header>
 
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            id="site-menu"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Site menu"
-            initial={{ clipPath: 'inset(0 0 100% 0)' }}
-            animate={{ clipPath: 'inset(0 0 0% 0)' }}
-            exit={{ clipPath: 'inset(0 0 100% 0)' }}
-            transition={{ duration: 0.75, ease: EASE }}
-            className="fixed inset-0 z-40 overflow-y-auto bg-olive text-cream"
-          >
-            <div className="flex min-h-full flex-col px-4 pb-8 pt-28 md:px-10 lg:flex-row lg:items-center lg:gap-16 lg:pt-20">
-              {/* Project tiles */}
-              <div className="hidden flex-1 grid-cols-2 gap-4 lg:grid lg:max-w-xl">
-                {projects.slice(0, 4).map((project, i) => (
-                  <motion.a
-                    key={project.title}
-                    href="#projects"
-                    onClick={() => setIsOpen(false)}
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 + i * 0.07, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                    className="group relative flex aspect-square flex-col justify-between overflow-hidden rounded-md bg-ink p-4"
-                  >
-                    <span className="eyebrow text-sage">{project.label}</span>
-                    <ProjectGlyph
-                      name={project.icon}
-                      className="mx-auto h-20 w-20 text-cream/70 transition-all duration-500 group-hover:scale-110 group-hover:text-lime"
-                    />
-                    <span className="display-sans text-sm text-cream">{project.short}</span>
-                  </motion.a>
-                ))}
-              </div>
-
-              {/* Links */}
-              <div className="flex flex-1 flex-col items-center justify-center text-center">
-                <ul onMouseLeave={() => setHovered(null)}>
-                  {navLinks.map((link, i) => (
-                    <li key={link.href} className="overflow-hidden">
-                      <motion.a
-                        href={link.href}
-                        onClick={() => setIsOpen(false)}
-                        onMouseEnter={() => setHovered(link.href)}
-                        initial={{ y: '100%' }}
-                        animate={{ y: 0 }}
-                        transition={{ delay: 0.25 + i * 0.05, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                        className="display-sans relative inline-block py-1 text-[clamp(2.5rem,7vw,5rem)]"
-                      >
-                        {link.label}
-                        <span
-                          className={cn(
-                            'absolute left-[-4%] top-1/2 h-[0.09em] w-[108%] origin-left bg-lime transition-transform duration-500',
-                            marked === link.href ? 'scale-x-100' : 'scale-x-0'
-                          )}
-                        />
-                      </motion.a>
-                    </li>
-                  ))}
-                </ul>
-
-                <RotatingBadge text="PRATYUSH · DEO · SINGH · CS · VIT · " className="mt-10 h-20 w-20 text-lime">
-                  <Monogram className="h-6 w-6 text-cream" />
-                </RotatingBadge>
-
-                <ul className="mt-10 flex flex-wrap justify-center gap-x-6 gap-y-2">
-                  {socialLinks.map(link => (
-                    <li key={link.label}>
-                      <a
-                        href={link.href}
-                        target={link.href.startsWith('mailto') ? undefined : '_blank'}
-                        rel={link.href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
-                        className="eyebrow text-sage transition-colors hover:text-lime"
-                      >
-                        {link.label}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-
-            {/* Telemetry-style bars */}
-            <div className="pointer-events-none absolute bottom-6 right-6 hidden flex-col items-end gap-2 md:flex" aria-hidden="true">
-              {[64, 40, 88, 24].map((w, i) => (
-                <span
-                  key={i}
-                  className="animate-eq block h-1.5 bg-lime"
-                  style={{ width: w, animationDelay: `${i * -0.35}s` }}
-                />
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <Menu open={isOpen} active={active} onClose={() => setIsOpen(false)} />
     </>
   );
 }

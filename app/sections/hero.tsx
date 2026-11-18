@@ -1,7 +1,6 @@
 'use client';
 
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
-import { ArrowDown } from 'lucide-react';
 import { useRef } from 'react';
 import { heroTagline } from '@/data/portfolio';
 import { TopoLines, buildContours } from '@/app/components/effects/topo-lines';
@@ -107,7 +106,7 @@ export function HeroSection() {
 
       <motion.div
         style={{ y: nameY, scale: nameScale, opacity: nameOpacity }}
-        className="container-page relative z-10 flex flex-1 flex-col items-center justify-center pb-36 pt-28 text-center"
+        className="container-page relative z-10 flex flex-1 flex-col items-center justify-center pb-24 pt-28 text-center"
       >
         <motion.p {...fade(START)} className="eyebrow mb-6 flex items-center gap-3 text-mute">
           <span className="h-px w-8 bg-mute/50" />
@@ -128,14 +127,6 @@ export function HeroSection() {
           {heroTagline}
         </motion.p>
 
-        <motion.p {...fade(START + 0.6)} className="eyebrow mt-8 flex items-center gap-2 text-ink">
-          <span className="relative flex h-2 w-2 shrink-0">
-            <span className="absolute inset-0 animate-ping rounded-full bg-lime" />
-            <span className="relative h-2 w-2 rounded-full bg-ink" />
-          </span>
-          <span className="[@media(hover:none)]:hidden">Move your cursor over my name</span>
-          <span className="hidden [@media(hover:none)]:inline">Watch my name paint itself</span>
-        </motion.p>
       </motion.div>
 
       <motion.div {...fade(START + 0.7)} className="absolute bottom-6 left-4 z-10 hidden sm:block md:left-6">
@@ -144,16 +135,6 @@ export function HeroSection() {
         </RotatingBadge>
       </motion.div>
 
-      <motion.a
-        {...fade(START + 0.8)}
-        href="#about"
-        className="eyebrow absolute bottom-6 right-4 z-10 flex items-center gap-2 text-ink md:right-6"
-      >
-        Scroll
-        <span className="flex h-9 w-9 items-center justify-center rounded-md bg-ink text-lime">
-          <ArrowDown className="h-4 w-4" />
-        </span>
-      </motion.a>
     </section>
   );
 }

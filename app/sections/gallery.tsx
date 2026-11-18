@@ -93,7 +93,7 @@ function FrameItem({ frame, index }: { frame: Frame; index: number }) {
 function Track({ innerRef, style }: { innerRef?: React.Ref<HTMLDivElement>; style?: React.ComponentProps<typeof motion.div>['style'] }) {
   let photoIndex = 0;
   return (
-    <motion.div ref={innerRef} style={style} className="flex h-full w-max items-stretch gap-[6vw] pl-4 pr-[12vw] md:pl-10">
+    <motion.div ref={innerRef} style={style} className="flex h-full w-max items-stretch gap-[6vw] pl-4 pr-[12vw] will-change-transform md:pl-10">
       {/* Intro panel */}
       <div className="flex max-w-[80vw] shrink-0 flex-col justify-center">
         <h2 className="whitespace-nowrap text-ink">
@@ -139,7 +139,7 @@ export function GallerySection() {
 
   // Lean the track slightly in the direction of travel, like motion blur at speed.
   const velocity = useVelocity(scrollYProgress);
-  const skew = useSpring(useTransform(velocity, [-1.5, 0, 1.5], [4, 0, -4]), { stiffness: 260, damping: 40 });
+  const skew = useSpring(useTransform(velocity, [-1.5, 0, 1.5], [2.5, 0, -2.5]), { stiffness: 120, damping: 30, mass: 0.6 });
 
   useMotionValueEvent(scrollYProgress, 'change', v => {
     setCurrent(Math.min(photoCount, Math.max(1, Math.round(v * (photoCount - 1)) + 1)));

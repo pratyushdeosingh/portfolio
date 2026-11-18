@@ -35,6 +35,7 @@ export function PaintReveal({ children, overlay, className, areaRef }: PaintReve
     let visible = true;
     let frame = 0;
     let lastMask = '';
+    const brush = { x: NaN, y: NaN };
     const start = performance.now();
 
     const onMove = (e: PointerEvent) => {
@@ -64,11 +65,22 @@ export function PaintReveal({ children, overlay, className, areaRef }: PaintReve
         y = h * (0.5 + 0.38 * Math.sin(t * 1.25 + 0.6));
       }
 
+      // Ease the brush toward its target so the trail flows instead of jumping.
+      if (Number.isNaN(brush.x)) {
+        brush.x = x;
+        brush.y = y;
+      } else {
+        brush.x += (x - brush.x) * 0.22;
+        brush.y += (y - brush.y) * 0.22;
+      }
+      x = brush.x;
+      y = brush.y;
+
       const prev = points[points.length - 1];
       if (!prev || Math.hypot(prev.x - x, prev.y - y) > radius * 0.18) points.push({ x, y, life: 1 });
       else prev.life = 1;
 
-      for (const p of points) p.life -= 0.018;
+      for (const p of points) p.life -= 0.014;
       while (points.length && (points[0].life <= 0 || points.length > TRAIL)) points.shift();
 
       const mask = points.length

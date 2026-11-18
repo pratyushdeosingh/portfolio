@@ -20,16 +20,22 @@ export function Loader() {
     const duration = 1300;
     let frame = 0;
 
+    let done: ReturnType<typeof setTimeout> | undefined;
+
     const tick = (now: number) => {
       const t = Math.min(1, (now - start) / duration);
       setCount(Math.round((1 - Math.pow(1 - t, 3)) * 100));
       if (t < 1) frame = requestAnimationFrame(tick);
-      else setTimeout(() => setVisible(false), 250);
+      else done = setTimeout(() => setVisible(false), 250);
     };
     frame = requestAnimationFrame(tick);
+    // Safety net: never hold the page behind the loader, even if frames are throttled.
+    const fallback = setTimeout(() => setVisible(false), 3500);
 
     return () => {
       cancelAnimationFrame(frame);
+      clearTimeout(done);
+      clearTimeout(fallback);
       document.documentElement.style.overflow = '';
     };
   }, []);
