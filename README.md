@@ -3,8 +3,8 @@
 Personal portfolio of a Computer Science student at VIT Chennai, built with **Next.js**, **React**,
 **TypeScript** and **Tailwind CSS**.
 
-Live site: https://pratyushdeosingh.vercel.app
-Mirror on GitHub Pages: https://pratyushdeosingh.github.io/portfolio/
+- Live site: https://pratyushdeosingh.vercel.app
+- GitHub Pages mirror: https://pratyushdeosingh.github.io/portfolio/
 
 ## Design
 
